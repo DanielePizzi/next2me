@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.8.RELEASE</version>
+        <relativePath/>
+    </parent>
+ 
+    <groupId>com.uniroma2</groupId>
+    <artifactId>next2me</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    
+<!--     <properties> -->
+<!-- 		<angular.module.dir>../com.uniroma2.prese.angular</angular.module.dir> -->
+<!-- 		<webapp.module.dir>../com.uniroma2.prese.webapp</webapp.module.dir> -->
+<!-- 	</properties> -->
+    
+    <modules>
+        <module>${angular.module.dir}</module>
+        <module>${webapp.module.dir}</module>
+    </modules>
+ 
+    <name>next2me</name>
+    <description>Spring Boot and Angular application</description>
+ 
+</project>
