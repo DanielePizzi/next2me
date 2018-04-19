@@ -48,6 +48,7 @@ public class UserController extends AbstractRestController {
 //		return this.buildResponse(output, newUser);
 //		
 //		newUser.setRole("USER");
+		//
 		
 //		return new ResponseEntity<User>(userService.save(newUser), HttpStatus.CREATED);
 		return new ResponseEntity<Object>(null, HttpStatus.CREATED);
