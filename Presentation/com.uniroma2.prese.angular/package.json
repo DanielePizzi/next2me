@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --base-href /next2me",
-    "build": "ng --base-href /next2me build -prod –output-path dist/META-INF/resources",
+    "build": "ng build -prod –output-path dist/META-INF/resources",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
