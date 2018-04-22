@@ -11,8 +11,8 @@ public abstract class AbstractRestController {
 	 * @param request
 	 * @return ResponseEntity
 	 */
-	protected <T extends AbstractRequest, K extends AbstractResponse> ResponseEntity<T> buildResponse(T response, K request) {
-		ResponseEntity<T> output = null;
+	protected <T extends AbstractRequest, K extends AbstractResponse> ResponseEntity<K> buildResponse(T request, K response) {
+		ResponseEntity<K> output = null;
 		// SE CI SONO ERRORI
 		if (this.hasLoginError(response)) {
 			output = new ResponseEntity<>(response, HttpStatus.PRECONDITION_FAILED);
@@ -26,15 +26,15 @@ public abstract class AbstractRestController {
 		return output;
 	}
 	
-	private <T> boolean hasLoginError(T response) {
+	private <K> boolean hasLoginError(K response) {
 		return false;
 	}
 	
-	private <T> boolean hasTechnicalError(T response) {
+	private <K> boolean hasTechnicalError(K response) {
 		return false;
 	}
 	
-	private <T> boolean hasRunTimeError(T response) {
+	private <K> boolean hasRunTimeError(K response) {
 		return false;
 	}
 

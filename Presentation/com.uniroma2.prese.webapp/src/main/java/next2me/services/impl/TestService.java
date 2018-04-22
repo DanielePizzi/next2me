@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import next2me.abstracts.AbstractRequest;
 import next2me.abstracts.AbstractResponse;
+import next2me.model.response.TestOutput;
 import next2me.services.IService;
 
 @Service
@@ -11,8 +12,11 @@ public class TestService implements IService {
 
 	@Override
 	public AbstractResponse call(AbstractRequest request, AbstractResponse response) {
-		// SERVICE LOGIC
-		return null;
+		TestOutput output = new TestOutput();
+		
+		output.setO(".........asdasdasdasdasd");
+		
+		return output;
 	}
 
 }
