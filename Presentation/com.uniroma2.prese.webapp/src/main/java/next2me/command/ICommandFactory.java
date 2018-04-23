@@ -1,8 +1,11 @@
 package next2me.command;
 
+import org.springframework.stereotype.Component;
+
 import next2me.abstracts.AbstractRequest;
 import next2me.abstracts.AbstractResponse;
 
+@Component
 public interface ICommandFactory {
 	
 	/**
