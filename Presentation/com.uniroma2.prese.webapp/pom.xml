@@ -13,9 +13,7 @@
     
      <properties>
 <!--      	<ctx.root>next2me</ctx.root> -->
-		<angular.module.dir>../com.uniroma2.prese.angular</angular.module.dir>
-		<webapp.module.dir>../com.uniroma2.prese.webapp</webapp.module.dir>
-		
+		<angular.module.dir>../com.uniroma2.prese.angular</angular.module.dir>		
 		<!-- DIPENDENZE PER BUILD -->
 		<!-- use UTF-8 for everything -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,6 +60,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>

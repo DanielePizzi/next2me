@@ -49,7 +49,6 @@ public class UserController extends AbstractRestController {
 		
 		AbstractResponse output = new TestOutput();
 		output = commandFactory.callService("userService", newUser, output);
-//		
 		return this.buildResponse(newUser, output);
 //		
 //		newUser.setRole("USER");
