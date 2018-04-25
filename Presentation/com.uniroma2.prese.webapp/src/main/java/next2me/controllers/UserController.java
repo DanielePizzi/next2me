@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import next2me.abstracts.AbstractRequest;
@@ -37,7 +38,7 @@ public class UserController extends AbstractRestController {
 	// metodo per creare un nuovo utente
 	@CrossOrigin
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> createUser(@RequestBody TestInput newUser) {
+	public @ResponseBody ResponseEntity<AbstractResponse> createUser() {
 //		if (userService.find(newUser.getUsername()) != null) {
 //			logger.error("username Already exist " + newUser.getUsername());
 //			return new ResponseEntity(
@@ -48,7 +49,8 @@ public class UserController extends AbstractRestController {
 //		User output = null;
 		
 		AbstractResponse output = new TestOutput();
-		output = commandFactory.callService("userService", newUser, output);
+		TestInput newUser = new TestInput();
+		output = commandFactory.callService("testService", newUser, output);
 		return this.buildResponse(newUser, output);
 //		
 //		newUser.setRole("USER");
