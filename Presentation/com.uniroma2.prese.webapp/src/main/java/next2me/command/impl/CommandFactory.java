@@ -14,7 +14,6 @@ import next2me.services.IService;
 public class CommandFactory implements ICommandFactory {
 	
 	@Autowired
-	@Qualifier("serviceCenter")
 	private ServiceCenter serviceCenter;
 
 	@Override

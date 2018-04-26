@@ -5,31 +5,24 @@
 	id="webProject" version="2.5">
 	<display-name>next2me</display-name>
 
-<!-- 	<context-param>  -->
-<!--      <param-name>contextConfigLocation</param-name>  -->
-<!--      <param-value>classpath:config/spring/applicationContext.xml</param-value>  -->
-<!--    </context-param> -->
+    <!-- location of the root application context xml file -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+	<context-param> 
+     <param-name>contextConfigLocation</param-name> 
+     <param-value>classpath:config/spring/applicationContext.xml</param-value> 
+   </context-param>
 	
 	<servlet>
 		<servlet-name>rest</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-<!-- 		<init-param> -->
-<!-- 	      <param-name>contextConfigLocation</param-name> -->
-<!-- 	      <param-value>classpath:config/spring/applicationContext.xml</param-value> -->
-<!-- 	    </init-param> -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
- 
-    <!-- location of the root application context xml file -->
-<!--     <context-param> -->
-<!--         <param-name>contextConfigLocation</param-name> -->
-<!--         <param-value>classpath:config/spring/applicationContext.xml, ./resources/config/spring/applicationContext.xml, ../resources/config/spring/applicationContext.xml</param-value> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
-<!--     </context-param> -->
 
 	<servlet-mapping>
 		<servlet-name>rest</servlet-name>
-		<url-pattern>/next2me/*</url-pattern>
+		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 
 	<welcome-file-list>

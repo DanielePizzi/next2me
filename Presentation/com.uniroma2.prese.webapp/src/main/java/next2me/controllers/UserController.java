@@ -32,7 +32,6 @@ public class UserController extends AbstractRestController {
 //	private UserService userService;
 	
 	@Autowired
-	@Qualifier("commandFactory")
 	private ICommandFactory commandFactory;
 
 	// metodo per creare un nuovo utente

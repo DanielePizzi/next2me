@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import next2me.services.IService;
 
-@Component
+//@Component
 public class ServiceCenter implements Serializable {
 	
 	/**
@@ -19,18 +19,18 @@ public class ServiceCenter implements Serializable {
 	private static final long serialVersionUID = 1704129427258036873L;
 	private Map<String, Object> services;
 	
-	@Autowired
-	private IService testService;
+//	@Autowired
+//	private IService testService;
 	
 	public ServiceCenter() {
 		this.services = new HashMap<>();
-		this.services.put("testService", testService);
+//		this.services.put("testService", testService);
 	}
 	
-//	public ServiceCenter(Map<String, Object> services) {
-//		this.services = new HashMap<>(services);
+	public ServiceCenter(Map<String, Object> services) {
+		this.services = new HashMap<>(services);
 //		this.services.put("testService", testService);
-//	}
+	}
 
 	/**
 	 * @return the services
