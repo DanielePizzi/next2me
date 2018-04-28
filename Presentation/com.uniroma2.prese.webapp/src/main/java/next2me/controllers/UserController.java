@@ -37,7 +37,7 @@ public class UserController extends AbstractRestController {
 	// metodo per creare un nuovo utente
 	@CrossOrigin
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<AbstractResponse> createUser() {
+	public @ResponseBody ResponseEntity<AbstractResponse> createUser(@RequestBody TestInput newUser) {
 //		if (userService.find(newUser.getUsername()) != null) {
 //			logger.error("username Already exist " + newUser.getUsername());
 //			return new ResponseEntity(
@@ -47,9 +47,15 @@ public class UserController extends AbstractRestController {
 //		
 //		User output = null;
 		
+		String methodName = "createUser";
+		
+		logger.info("Start controller [" + methodName + "]");
+		
 		AbstractResponse output = new TestOutput();
-		TestInput newUser = new TestInput();
 		output = commandFactory.callService("testService", newUser, output);
+		
+		logger.info("End controller [" + methodName + "]");
+		
 		return this.buildResponse(newUser, output);
 //		
 //		newUser.setRole("USER");
