@@ -20,4 +20,12 @@ public class TestOutput extends AbstractResponse {
 		this.o = o;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TestOutput [o=" + o + "]";
+	}
+
 }
