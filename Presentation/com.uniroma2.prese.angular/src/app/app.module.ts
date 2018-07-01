@@ -10,8 +10,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './services/auth.service';
 import { AccountService } from './services/account.service';
-import { UrlPermission } from './urlPermission/url.permission';
 import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { UrlPermission } from './shared/urlPermission/url.permission';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     HttpModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CoreModule,
+    SharedModule,
   ],
   providers: [AuthService,AccountService,UrlPermission],
   bootstrap: [AppComponent]

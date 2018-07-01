@@ -1,9 +1,9 @@
 import { Routes, RouterModule } from "@angular/router";
 import { ProfileComponent } from "./components/profile/profile.component";
-import { UrlPermission } from "./urlPermission/url.permission";
 import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { NgModule } from "@angular/core";
+import { UrlPermission } from "./shared/urlPermission/url.permission";
 
 const routes: Routes = [
   // otherwise redirect to profile

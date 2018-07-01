@@ -1,26 +1,25 @@
 package next2me.model.response;
 
-public class RegisterResponse extends StatusResponse {
-	private String token_sessione;
-	private String nome;
+import next2me.abstracts.AbstractResponse;
+
+public class RegisterResponse extends AbstractResponse {
 	
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+	private String token_sessione;
+
+	/**
+	 * @return the token_sessione
+	 */
 	public String getToken_sessione() {
 		return token_sessione;
 	}
+
+	/**
+	 * @param token_sessione the token_sessione to set
+	 */
 	public void setToken_sessione(String token_sessione) {
 		this.token_sessione = token_sessione;
 	}
-	@Override
-	public String toString() {
-		return "RegisterResponse [esito=" + esito + ", token_sessione="
-				+ token_sessione + ", nome=" + nome + "]";
-	}
+	
 	
 	
 }

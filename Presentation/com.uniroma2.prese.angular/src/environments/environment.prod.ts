@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  name: 'prod',
+  apiUrl: 'da decidere',
+  hasRemote: false
 };

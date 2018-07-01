@@ -4,16 +4,13 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import next2me.abstracts.AbstractRequest;
 
-public class RegisterRequest {
-	@NotBlank
-	@NotNull
+
+public class RegisterRequest extends AbstractRequest{
+	
 	private String name;
-	@NotBlank
-	@NotNull
 	private String password;
-	@NotBlank
-	@NotNull
 	private String email;
 	
 	
