@@ -9,7 +9,7 @@
 
 const fs           = require('fs');
 const chalk        = require("chalk");
-const environments = ['develop','prod'];
+const environments = ['dev','prod'];
 const filepath     = './src/environments/ALL-ENVIRONMENTS.ts';
 let result         = {};
 
