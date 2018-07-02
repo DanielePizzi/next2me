@@ -25,26 +25,6 @@ public class ServicesImpl implements IServices{
 	
 	DAOFactory mysqlDAOfactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 	
-	public void registrazione(String name, String email, String password){
-		String method = "registrazione";
-		
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           START",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		
-		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
-		
-		User user = new User();
-		user.setNome(name);
-		user.setEmail(email);
-		user.setPassword(password);
-		userDAO.addUser(user);
-		
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           END",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-	}
-	
 	
 	public User login(String email){
 		String method = "login";
@@ -63,48 +43,6 @@ public class ServicesImpl implements IServices{
 		logger.debug(String.format("%s - %s::           END",CLASS,method));
 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 		return user;
-	}
-
-
-	public boolean isUserExist(String email, String name) {
-		String method = "isUserExist";
-		
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           START",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		
-		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
-		
-		User user = userDAO.getUser(email);
-		
-		if(user != null){
-			
-			logger.debug(String.format("%s - %s:: l'utente esiste [%s]",CLASS,method,user.toString()));
-			logger.debug(String.format("%s - %s:: return true",CLASS,method));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			logger.debug(String.format("%s - %s::           END",CLASS,method));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			return true;
-		}
-		
-		User userName = userDAO.getUserName(name);
-		
-		if(userName != null){
-			logger.debug(String.format("%s - %s:: esiste un utente con lo stesso nome[%s]",CLASS,method,userName.toString()));
-			logger.debug(String.format("%s - %s:: return true",CLASS,method));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			logger.debug(String.format("%s - %s::           END",CLASS,method));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			return true;
-		}
-		
-		logger.debug(String.format("%s - %s:: l'utente non esiste",CLASS,method));
-		logger.debug(String.format("%s - %s:: return false",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           END",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		return false;
-		
 	}
 
 

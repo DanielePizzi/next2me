@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,12 @@ import next2me.abstracts.AbstractRequest;
 import next2me.abstracts.AbstractResponse;
 import next2me.abstracts.AbstractRestController;
 import next2me.command.ICommandFactory;
+import next2me.enums.ErrorEnum;
+import next2me.model.request.RegisterRequest;
 import next2me.model.request.TestInput;
+import next2me.model.response.RegisterResponse;
 import next2me.model.response.TestOutput;
+import next2me.utils.ErrorHandler;
 
 @RestController
 @RequestMapping("user")
@@ -37,7 +42,7 @@ public class UserController extends AbstractRestController {
 	// metodo per creare un nuovo utente
 	@CrossOrigin
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<AbstractResponse> createUser(@RequestBody TestInput newUser) {
+	public @ResponseBody ResponseEntity<AbstractResponse> createUser(@RequestBody RegisterRequest newUser, Errors errors) {
 //		if (userService.find(newUser.getUsername()) != null) {
 //			logger.error("username Already exist " + newUser.getUsername());
 //			return new ResponseEntity(
@@ -51,8 +56,13 @@ public class UserController extends AbstractRestController {
 		
 		logger.info("Start controller [" + methodName + "]");
 		
-		AbstractResponse output = new TestOutput();
-		output = commandFactory.callService("testService", newUser, output);
+		RegisterResponse output = new RegisterResponse();
+		
+		if (errors.hasErrors()) {
+			output = ErrorHandler.addError(output, newUser, ErrorEnum.INPUT_NON_VALIDO);
+		} else {
+			output = (RegisterResponse) commandFactory.callService("registrazioneService", newUser, output);
+		}
 		
 		logger.info("End controller [" + methodName + "]");
 		
