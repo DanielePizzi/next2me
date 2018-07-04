@@ -1,6 +1,9 @@
 package next2me.model.response;
 
-public class LoginResponse extends StatusResponse {
+import next2me.abstracts.AbstractResponse;
+
+public class LoginResponse extends AbstractResponse {
+	
 	private String token_sessione;
 	private String nome;
 	
@@ -15,11 +18,6 @@ public class LoginResponse extends StatusResponse {
 	}
 	public void setToken_sessione(String token_sessione) {
 		this.token_sessione = token_sessione;
-	}
-	@Override
-	public String toString() {
-		return "LoginResponse [esito=" + esito + ", token_sessione="
-				+ token_sessione + ", nome=" + nome + "]";
 	}
 	
 }

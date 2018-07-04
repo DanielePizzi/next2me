@@ -25,27 +25,6 @@ public class ServicesImpl implements IServices{
 	
 	DAOFactory mysqlDAOfactory = DAOFactory.getDAOFactory(DAOFactory.MYSQL);
 	
-	
-	public User login(String email){
-		String method = "login";
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           START",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		
-		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
-			
-		User user = userDAO.getUser(email);
-
-		if (user != null){
-			logger.debug(String.format("%s - %s:: user[%s]",CLASS,method,user.toString()));			
-		}
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           END",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		return user;
-	}
-
-
 	@Override
 	public void savePoint(String username, String nome, String citta, String stato, String lat, String lng, String tipo, String descrizione) {
 		String method = "savePoint";

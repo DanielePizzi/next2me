@@ -4,7 +4,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class LoginRequest {
+import next2me.abstracts.AbstractRequest;
+
+public class LoginRequest extends AbstractRequest{
 	@NotBlank
 	@NotNull
 	private String email;

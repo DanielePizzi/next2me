@@ -21,8 +21,10 @@ import next2me.abstracts.AbstractResponse;
 import next2me.abstracts.AbstractRestController;
 import next2me.command.ICommandFactory;
 import next2me.enums.ErrorEnum;
+import next2me.model.request.LoginRequest;
 import next2me.model.request.RegisterRequest;
 import next2me.model.request.TestInput;
+import next2me.model.response.LoginResponse;
 import next2me.model.response.RegisterResponse;
 import next2me.model.response.TestOutput;
 import next2me.utils.ErrorHandler;
@@ -75,12 +77,35 @@ public class UserController extends AbstractRestController {
 //		return new ResponseEntity<Object>(output, HttpStatus.CREATED);
 	}
 
-	// this is the login api/service
+	// metodo per la login
 	@CrossOrigin
-	@RequestMapping("/login")
-	public Principal user(Principal principal) {
-		logger.info("user logged "+principal);
-		return principal;
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<AbstractResponse> login(@RequestBody LoginRequest loginUser, Errors errors) {
+
+//		logger.info("user logged "+principal);
+//		return principal;
+		
+		String methodName = "loginUser";
+		
+		logger.info("Start controller [" + methodName + "]");
+		
+		LoginResponse output = new LoginResponse();
+		
+		if (errors.hasErrors()) {
+			output = ErrorHandler.addError(output, loginUser, ErrorEnum.INPUT_NON_VALIDO);
+		} else {
+			output = (LoginResponse) commandFactory.callService("loginService", loginUser, output);
+		}
+		
+		logger.info("End controller [" + methodName + "]");
+		
+		return this.buildResponse(loginUser, output);
+//		
+//		newUser.setRole("USER");
+		//
+		
+//		return new ResponseEntity<User>(userService.save(newUser), HttpStatus.CREATED);
+//		return new ResponseEntity<Object>(output, HttpStatus.CREATED);
 	}
 
 }

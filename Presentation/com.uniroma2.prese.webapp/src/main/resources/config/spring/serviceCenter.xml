@@ -15,6 +15,7 @@
 		<property name="services">
 			<map key-type="java.lang.String" value-type="java.lang.Object">
 				<entry key="registrazioneService" value-ref="registrazioneService" />
+				<entry key="loginService" value-ref="loginService" />
 			</map>
 		</property>
 	</bean>

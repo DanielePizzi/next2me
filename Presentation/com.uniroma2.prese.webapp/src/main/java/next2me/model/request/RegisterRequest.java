@@ -9,8 +9,14 @@ import next2me.abstracts.AbstractRequest;
 
 public class RegisterRequest extends AbstractRequest{
 	
+	@NotBlank
+	@NotNull
 	private String name;
+	@NotBlank
+	@NotNull
 	private String password;
+	@NotBlank
+	@NotNull
 	private String email;
 	
 	
