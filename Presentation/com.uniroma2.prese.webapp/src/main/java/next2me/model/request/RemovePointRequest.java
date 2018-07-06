@@ -1,6 +1,8 @@
 package next2me.model.request;
 
-public class RemovePointRequest {
+import next2me.abstracts.AbstractRequest;
+
+public class RemovePointRequest extends AbstractRequest{
 	
 	int idPoint;
 

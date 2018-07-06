@@ -16,6 +16,9 @@
 			<map key-type="java.lang.String" value-type="java.lang.Object">
 				<entry key="registrazioneService" value-ref="registrazioneService" />
 				<entry key="loginService" value-ref="loginService" />
+				<entry key="getPuntoInteresseService" value-ref="getPuntoInteresseService" />
+				<entry key="rimuoviPuntoInteresseService" value-ref="rimuoviPuntoInteresseService" />
+				<entry key="salvaPuntoInteresseService" value-ref="salvaPuntoInteresseService" />
 			</map>
 		</property>
 	</bean>

@@ -4,7 +4,10 @@ import java.util.HashMap;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,149 +15,91 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import next2me.abstracts.AbstractResponse;
+import next2me.abstracts.AbstractRestController;
+import next2me.command.ICommandFactory;
+import next2me.enums.ErrorEnum;
 import next2me.model.request.GetPointRequest;
 import next2me.model.request.RemovePointRequest;
 import next2me.model.request.SavePointRequest;
 import next2me.model.response.GetPointResponse;
+import next2me.model.response.RegisterResponse;
 import next2me.model.response.RemovePointResponse;
 import next2me.model.response.SavePointResponse;
-import next2me.services.IServices;
-import next2me.services.impl.ServicesImpl;
+import next2me.utils.ErrorHandler;
 
 
-
-@RequestMapping(value = "/maps")
 @RestController
-public class MapsController {
+@RequestMapping("maps")
+public class MapsController extends AbstractRestController{
 	
-	private IServices services = new ServicesImpl();
+	@Autowired
+	private ICommandFactory commandFactory;
 	
 	private static final String CLASS = "MapsController";
-	
-	Logger logger = Logger.getLogger("FINDMENEAR");
+	public static final Logger logger = LoggerFactory.getLogger(MapsController.class);
 
-	@RequestMapping(value = "/savePoint", method = RequestMethod.POST)
-	@ResponseBody
-	public SavePointResponse savePoint(@Valid @RequestBody SavePointRequest request, Errors errors){
+	@RequestMapping(value = "/salvaPuntoInteresse", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<AbstractResponse> salvaPuntoInteresse(@Valid @RequestBody SavePointRequest request, Errors errors){
 		
-		String method = "savePoint";
+		String methodName = "salvaPuntoInteresse";
 		
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           START",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.info("Start controller [" + methodName + "]");
 		
-		logger.debug(String.format("%s - %s::input[%s]",CLASS,method,request.toString()));
+		SavePointResponse output = new SavePointResponse();
 		
-		SavePointResponse response = new SavePointResponse();
-		if(errors.hasErrors()){
-			response.setEsito(false);
-			response.setDescrizione("INPUT NON VALIDI");
-			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,errors.getAllErrors()));
-			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			logger.debug(String.format("%s - %s::           END",CLASS,method));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			return response;
+		if (errors.hasErrors()) {
+			output = ErrorHandler.addError(output, request, ErrorEnum.INPUT_NON_VALIDO);
+		} else {
+			output = (SavePointResponse) commandFactory.callService("salvaPuntoInteresseService", request, output);
 		}
-		HashMap<String,Object> pointLocation = ((HashMap<String, Object>) request.getPointOfInterest());
-		String nome = (String) pointLocation.get("nome");
-		String citta = (String) pointLocation.get("citta");
-		String stato = (String) pointLocation.get("stato");
-		HashMap<String,Object> geometry = (HashMap<String, Object>) pointLocation.get("geometry");
-		HashMap<String,Object> location = (HashMap<String, Object>) geometry.get("location");
-		String lat = location.get("lat").toString();
-		String lng = location.get("lng").toString();
-		String tipo = (String) pointLocation.get("tipo");
-		String descrizione = (String) pointLocation.get("descrizione");
 		
-		try{
-			services.savePoint(request.getUsername(), nome, citta, stato, lat, lng, tipo, descrizione);
-		}catch(Exception e){
-			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,e));
-			response.setEsito(false);
-			response.setDescrizione("ERRORE INTERNO");
-			return response;
-		}
-		response.setEsito(true);
-		response.setDescrizione("PUNTO SALVATO CON SUCCESSO");
- 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           END",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		return response;
+		logger.info("End controller [" + methodName + "]");
+		
+		return this.buildResponse(request, output);
+		
 	}
 	
-	@RequestMapping(value = "/getPoint", method = RequestMethod.POST)
-	@ResponseBody
-	public GetPointResponse getPoint(@Valid @RequestBody GetPointRequest request, Errors errors){
+	@RequestMapping(value = "/getPuntoInteresse", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<AbstractResponse> getPuntoInteresse(@Valid @RequestBody GetPointRequest request, Errors errors){
 		
-		String method = "getPoint";
+		String methodName = "salvaPuntoInteresse";
 		
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           START",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.info("Start controller [" + methodName + "]");
 		
-		logger.debug(String.format("%s - %s::input[%s]",CLASS,method,request.toString()));
+		GetPointResponse output = new GetPointResponse();
 		
-		GetPointResponse response = new GetPointResponse();
-		if(errors.hasErrors()){
-			response.setEsito(false);
-			response.setDescrizione("INPUT NON VALIDI");
-			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,errors.getAllErrors()));
-			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			logger.debug(String.format("%s - %s::           END",CLASS,method));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			return response;
+		if (errors.hasErrors()) {
+			output = ErrorHandler.addError(output, request, ErrorEnum.INPUT_NON_VALIDO);
+		} else {
+			output = (GetPointResponse) commandFactory.callService("getPuntoInteresseService", request, output);
 		}
-		try{
-			response = services.getPoint(request.getUsername(),request.getCategoria(), Double.parseDouble(request.getLatitudine()), Double.parseDouble(request.getLongitudine()));
-		}catch(Exception e){
-			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,e));
-			response.setEsito(false);
-			response.setDescrizione("ERRORE INTERNO");
-			return response;
-		}
- 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           END",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		return response;
+		
+		logger.info("End controller [" + methodName + "]");
+		
+		return this.buildResponse(request, output);
+		
 	}
 	
 	
-	@RequestMapping(value = "/removePoint", method = RequestMethod.POST)
-	@ResponseBody
-	public RemovePointResponse removePoint(@Valid @RequestBody RemovePointRequest request, Errors errors){
+	@RequestMapping(value = "/rimuoviPuntoInteresse", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<AbstractResponse> rimuoviPuntoInteresse(@Valid @RequestBody RemovePointRequest request, Errors errors){
 		
-		String method = "removePoint";
+		String methodName = "rimuoviPuntoInteresse";
 		
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           START",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
+		logger.info("Start controller [" + methodName + "]");
 		
-		logger.debug(String.format("%s - %s::input[%s]",CLASS,method,request.toString()));
+		RemovePointResponse output = new RemovePointResponse();
 		
-		RemovePointResponse response = new RemovePointResponse();
-		if(errors.hasErrors()){
-			response.setEsito(false);
-			response.setDescrizione("INPUT NON VALIDI");
-			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,errors.getAllErrors()));
-			logger.debug(String.format("%s - %s::response[%s]",CLASS,method,response.toString()));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			logger.debug(String.format("%s - %s::           END",CLASS,method));
-			logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-			return response;
+		if (errors.hasErrors()) {
+			output = ErrorHandler.addError(output, request, ErrorEnum.INPUT_NON_VALIDO);
+		} else {
+			output = (RemovePointResponse) commandFactory.callService("rimuoviPuntoInteresseService", request, output);
 		}
-		try{
-			response = services.removePoint(request.getIdPoint());
-		}catch(Exception e){
-			logger.debug(String.format("%s - %s::errors[%s]",CLASS,method,e));
-			response.setEsito(false);
-			response.setDescrizione("ERRORE INTERNO");
-			return response;
-		}
- 		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		logger.debug(String.format("%s - %s::           END",CLASS,method));
-		logger.debug(String.format("%s - %s::*****************************",CLASS,method));
-		return response;
+		
+		logger.info("End controller [" + methodName + "]");
+		
+		return this.buildResponse(request, output);
+		
 	}
 }

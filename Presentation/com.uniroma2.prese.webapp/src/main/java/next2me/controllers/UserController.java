@@ -34,9 +34,6 @@ import next2me.utils.ErrorHandler;
 public class UserController extends AbstractRestController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-//	@Autowired
-//	private UserService userService;
 	
 	@Autowired
 	private ICommandFactory commandFactory;

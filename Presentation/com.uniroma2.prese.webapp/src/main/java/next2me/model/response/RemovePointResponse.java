@@ -1,16 +1,8 @@
 package next2me.model.response;
 
-public class RemovePointResponse extends StatusResponse {
+import next2me.abstracts.AbstractResponse;
 
-	@Override
-	public String toString() {
-		return "RemovePointResponse [esito=" + esito + ", descrizione="
-				+ descrizione + ", isEsito()=" + isEsito()
-				+ ", getDescrizione()=" + getDescrizione() + ", toString()="
-				+ super.toString() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + "]";
-	}
-	
-	
+public class RemovePointResponse extends AbstractResponse {
+		
 	
 }

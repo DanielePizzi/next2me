@@ -3,7 +3,9 @@ package next2me.model.request;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class GetPointRequest {
+import next2me.abstracts.AbstractRequest;
+
+public class GetPointRequest extends AbstractRequest{
 	
 	@NotBlank
 	@NotEmpty

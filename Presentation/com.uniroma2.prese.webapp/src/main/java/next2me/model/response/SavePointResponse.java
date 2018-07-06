@@ -1,5 +1,7 @@
 package next2me.model.response;
 
-public class SavePointResponse extends StatusResponse {
+import next2me.abstracts.AbstractResponse;
+
+public class SavePointResponse extends AbstractResponse {
 	
 }
