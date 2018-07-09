@@ -16,6 +16,7 @@ public class SavePointRequest extends AbstractRequest{
 	String username;
 
 	Map pointOfInterest;
+	
 	public String getUsername() {
 		return username;
 	}
