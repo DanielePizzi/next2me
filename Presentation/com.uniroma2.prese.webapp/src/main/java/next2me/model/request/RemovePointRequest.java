@@ -1,9 +1,12 @@
 package next2me.model.request;
 
+import javax.validation.constraints.NotNull;
+
 import next2me.abstracts.AbstractRequest;
 
 public class RemovePointRequest extends AbstractRequest{
 	
+	@NotNull
 	int idPoint;
 
 	public int getIdPoint() {

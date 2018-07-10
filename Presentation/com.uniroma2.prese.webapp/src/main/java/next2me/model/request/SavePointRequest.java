@@ -4,14 +4,11 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import next2me.abstracts.AbstractRequest;
 
 
 public class SavePointRequest extends AbstractRequest{
 	
-	@NotEmpty
 	@NotNull
 	String username;
 

@@ -63,7 +63,7 @@ public class MapsController extends AbstractRestController{
 	@RequestMapping(value = "/getPuntoInteresse", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<AbstractResponse> getPuntoInteresse(@Valid @RequestBody GetPointRequest request, Errors errors){
 		
-		String methodName = "salvaPuntoInteresse";
+		String methodName = "getPuntoInteresse";
 		
 		logger.info("Start controller [" + methodName + "]");
 		

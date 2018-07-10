@@ -1,21 +1,19 @@
 package next2me.model.request;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import next2me.abstracts.AbstractRequest;
 
 
 public class RegisterRequest extends AbstractRequest{
 	
-	@NotBlank
 	@NotNull
+	@Size(min=1)
 	private String name;
-	@NotBlank
 	@NotNull
 	private String password;
-	@NotBlank
 	@NotNull
 	private String email;
 	

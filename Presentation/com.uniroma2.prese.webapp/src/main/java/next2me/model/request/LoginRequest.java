@@ -2,15 +2,12 @@ package next2me.model.request;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import next2me.abstracts.AbstractRequest;
 
 public class LoginRequest extends AbstractRequest{
-	@NotBlank
+	
 	@NotNull
 	private String email;
-	@NotBlank
 	@NotNull
 	private String password;
 	

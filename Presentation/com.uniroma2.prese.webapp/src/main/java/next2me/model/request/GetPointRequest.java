@@ -1,23 +1,19 @@
 package next2me.model.request;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import next2me.abstracts.AbstractRequest;
 
 public class GetPointRequest extends AbstractRequest{
 	
-	@NotBlank
-	@NotEmpty
+	@NotNull
 	String username;
-	@NotBlank
-	@NotEmpty
+	@NotNull
 	String categoria;
-	@NotBlank
-	@NotEmpty
+	@NotNull
 	String latitudine;
-	@NotBlank
-	@NotEmpty
+	@NotNull
 	String longitudine;
 	public String getUsername() {
 		return username;

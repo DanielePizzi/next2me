@@ -2,6 +2,8 @@ package next2me.controllers;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,7 @@ public class UserController extends AbstractRestController {
 	// metodo per creare un nuovo utente
 	@CrossOrigin
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<AbstractResponse> createUser(@RequestBody RegisterRequest newUser, Errors errors) {
+	public @ResponseBody ResponseEntity<AbstractResponse> createUser(@Valid @RequestBody RegisterRequest newUser, Errors errors) {
 //		if (userService.find(newUser.getUsername()) != null) {
 //			logger.error("username Already exist " + newUser.getUsername());
 //			return new ResponseEntity(
@@ -77,7 +79,7 @@ public class UserController extends AbstractRestController {
 	// metodo per la login
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<AbstractResponse> login(@RequestBody LoginRequest loginUser, Errors errors) {
+	public @ResponseBody ResponseEntity<AbstractResponse> login(@Valid @RequestBody LoginRequest loginUser, Errors errors) {
 
 //		logger.info("user logged "+principal);
 //		return principal;
