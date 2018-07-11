@@ -4,9 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { ProfileComponent } from './components/profile/profile.component';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './services/auth.service';
 import { AccountService } from './services/account.service';
@@ -18,10 +15,7 @@ import { UrlPermission } from './shared/urlPermission/url.permission';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    ProfileComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +23,7 @@ import { UrlPermission } from './shared/urlPermission/url.permission';
     FormsModule,
     AppRoutingModule,
     CoreModule,
-    SharedModule,
+    SharedModule
   ],
   providers: [AuthService,AccountService,UrlPermission],
   bootstrap: [AppComponent]

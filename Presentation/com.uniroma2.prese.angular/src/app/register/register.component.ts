@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {User} from "../../model/model.user";
-import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
+import { User } from '../model/model.user';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-register',
