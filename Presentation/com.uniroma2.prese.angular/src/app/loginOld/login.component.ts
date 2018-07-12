@@ -14,14 +14,7 @@ export class LoginComponent implements OnInit {
 
   user: User=new User();
   errorMessage:string;
-  email: string;
-  password: string;
-
   constructor(private authService :AuthService, private router: Router) { }
-
-  ngAfterViewInit() {
-    (window as any).initialize();
-  }
 
 
 

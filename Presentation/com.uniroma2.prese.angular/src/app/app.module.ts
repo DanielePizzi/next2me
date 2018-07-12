@@ -12,7 +12,6 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { UrlPermission } from './shared/urlPermission/url.permission';
 
-
 @NgModule({
   declarations: [
     AppComponent
@@ -23,7 +22,7 @@ import { UrlPermission } from './shared/urlPermission/url.permission';
     FormsModule,
     AppRoutingModule,
     CoreModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [AuthService,AccountService,UrlPermission],
   bootstrap: [AppComponent]
