@@ -6,6 +6,7 @@ import { EnvironmentService } from "../environment-service/environment-service";
 import { Subscription } from "rxjs/Subscription";
 import { ResponseError } from "../../model/model.responseError";
 import 'rxjs/add/operator/catch';
+import { LoaderService } from "../../core/services/loader.service";
 
 @Injectable()
 export class ApiService {
@@ -17,6 +18,7 @@ export class ApiService {
   constructor(
     private http: Http,
     public environmentService: EnvironmentService,
+    private loaderService : LoaderService
   ) {
     this.envsubscription = this.environmentService.get().subscribe((data) => {
       if (data) {
@@ -44,13 +46,14 @@ export class ApiService {
     }
 
     const request = new Request(requestOptions);
-
+    this.loaderService.show();
     return this.http.request(request)
       .map((res: Response) => {
-
+        this.loaderService.hide();
         return res.json();
       })
-      .catch((res: Response) => this.requestError(res));
+      // .catch((res: Response) => this.requestError(res));
+      .catch((e: any) => Observable.throw(this.errorHandler(e)));
   }
 
   private headersManager(requestMethod: RequestMethod): Headers {
@@ -79,20 +82,25 @@ export class ApiService {
 
   }
 
-  private requestError(res: Response | any) {
-    let errMsg: string;
-    if (res instanceof Response) {
-      const err = res || '';
-      errMsg = `${res.status} - ${res.statusText || ''} ${err}`;
-    } else {
-      errMsg = res.message ? res.message : res.toString();
-    }
-    let dataError = new ResponseError();
-    dataError.code = res.status;
-    dataError.message = res.statusText;
-    dataError.url = res.url;
-    dataError.body = (res && res.json()) || {};
-    return Observable.throw(dataError);
+  errorHandler(error: any): void {
+    this.loaderService.hide();
+    console.log(error)
   }
+
+  // private requestError(res: Response | any) {
+  //   let errMsg: string;
+  //   if (res instanceof Response) {
+  //     const err = res || '';
+  //     errMsg = `${res.status} - ${res.statusText || ''} ${err}`;
+  //   } else {
+  //     errMsg = res.message ? res.message : res.toString();
+  //   }
+  //   let dataError = new ResponseError();
+  //   dataError.code = res.status;
+  //   dataError.message = res.statusText;
+  //   dataError.url = res.url;
+  //   dataError.body = (res && res.json()) || {};
+  //   return Observable.throw(dataError);
+  // }
 
 }

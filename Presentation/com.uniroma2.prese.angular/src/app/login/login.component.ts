@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {Router} from "@angular/router";
 import { User } from '../model/model.user';
 import { AuthService } from '../services/auth.service';
+import { LoaderService } from '../core/services/loader.service';
 
 
 @Component({
@@ -17,7 +18,9 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
-  constructor(private authService :AuthService, private router: Router) { }
+  constructor(private authService :AuthService,
+              private router: Router,
+              private loaderService:LoaderService) { }
 
   ngAfterViewInit() {
     (window as any).initialize();
@@ -29,12 +32,13 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.authService.logIn(this.user)
-      .subscribe(data=>{
-        this.router.navigate(['/profile']);
-        },err=>{
-        this.errorMessage="error :  Username or password is incorrect";
-        }
-      )
+    // this.authService.logIn(this.user)
+    //   .subscribe(data=>{
+    //     this.router.navigate(['/profile']);
+    //     },err=>{
+    //     this.errorMessage="error :  Username or password is incorrect";
+    //     }
+    //   )
+    // this.loaderService.show();
   }
 }
