@@ -9,10 +9,11 @@ const routes: Routes = [
   // { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent }
   // otherwise redirect to profile
-  { path: '', redirectTo: '/login' , pathMatch: 'full'},
-  { path: 'profile', loadChildren: 'app/profile/profile.module#ProfileModule' ,canActivate: [UrlPermission] },
+  { path: '', redirectTo: '/homePage' , pathMatch: 'full'},
+  { path: 'homePage', loadChildren: 'app/home-page/home-page.module#HomePageModule'},
   { path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
-  { path: 'register', loadChildren: 'app/register/register.module#RegisterModule' }
+  { path: 'register', loadChildren: 'app/register/register.module#RegisterModule' },
+  { path: 'profile', loadChildren: 'app/profile/profile.module#ProfileModule' ,canActivate: [UrlPermission] }
 ];
 
 @NgModule({
