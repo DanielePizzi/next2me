@@ -1,4 +1,7 @@
 <div class = "container">
+  <div class="form-group">
+    <input placeholder="cerca per località" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+  </div>
   <div #map class="map">
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapReady)="mapReady($event)">
       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>

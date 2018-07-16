@@ -1,6 +1,11 @@
 agm-map {
   height: 300px;
 }
+
 .map{
+  margin-top: 25px;
+}
+
+.form-group{
   margin-top: 25px;
 }
