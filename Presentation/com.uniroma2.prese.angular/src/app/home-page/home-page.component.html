@@ -1,6 +1,26 @@
-<div class = "container">
-  <div class="form-group">
+<div class = "container-fluid">
+  <div class="row form-group">
     <input placeholder="cerca per località" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+  </div>
+  <!-- <div class="row">
+    <div class="col-md-auto">
+      <button type="button" class="btn btn-lg btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+          <div class="handle"></div>
+      </button>
+    </div>
+    <div class="col col-xs col-sm col-md col-lg">
+      <input placeholder="cerca per categoria" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" >
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="input-group">
+      <input placeholder="cerca per categoria" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" >
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-lg btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+          <div class="handle"></div>
+        </button>
+      </span>
+    </div>
   </div>
   <div #map class="map">
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapReady)="mapReady($event)">

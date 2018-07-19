@@ -6,14 +6,14 @@ declare var google: any;
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+  styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
 
   lat: number;
   lng: number;
   zoom: number;
-  map: any;
+  private map: any;
   public searchControl: FormControl;
 
   @ViewChild("search")
@@ -26,15 +26,15 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.zoom = 10;
-    this.loadAutocomplete();
+    this.caricaAutocompletamentoMappa();
 
   }
 
   mapReady($event: any) {
-    this.loadMap($event);
+    this.caricaMappa($event);
   }
 
-  private loadAutocomplete(){
+  private caricaAutocompletamentoMappa(){
     this.searchControl = new FormControl();
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
@@ -60,36 +60,53 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  private loadMap(map: any) {
+  private caricaMappa(map: any) {
     this.map = map;
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-      this.showPosition(position);
-      // let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      // let placeService = new google.maps.places.PlacesService(map);
-      //   placeService.nearbySearch({
-      //     location: latLng,
-      //     radius: 500,
-      //     type: ['pub']
-      //   }, (results, status) => {
-      //       this.callback(results, status)
-      //   });
+      navigator.geolocation.getCurrentPosition((posizione) => {
+      this.mostraPosizione(posizione);
       });
     } else {
       alert("Geolocalizzazione non supportata sul tuo brownser");
     }
   }
 
-  // callback(results, status) {
-  //   if (status === google.maps.places.PlacesServiceStatus.OK) {
-  //     for (var i = 0; i < results.length; i++) {
-  //       console.log(results)
-  //     }
-  //   }
-  // }
+  private cercaDaQuery(){
+    let latLng = new google.maps.LatLng(this.lat, this.lng);
+    let placeService = new google.maps.places.PlacesService(this.map);
+    placeService.findPlaceFromQuery({
+      location: latLng,
+      radius: 500,
+      type: ['pub']
+    }, (results, status) => {
+      this.callback(results, status)
+    });
+  }
 
-  private showPosition(position) {
+  private cercaDaCategoria(){
+    let latLng = new google.maps.LatLng(this.lat, this.lng);
+    let placeService = new google.maps.places.PlacesService(this.map);
+    placeService.nearbySearch({
+      location: latLng,
+      radius: 500,
+      type: ['pub']
+    }, (results, status) => {
+      this.callback(results, status)
+    });
+  }
+
+  callback(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        console.log(results)
+      }
+    } else {
+      alert("Servizio non disponibile")
+    }
+  }
+
+  private mostraPosizione(position) {
     this.lat = position.coords.latitude;
     this.lng = position.coords.longitude;
   }
