@@ -1,6 +1,6 @@
 
 
-<div class="container">
+<!-- <div class="container">
   <div class="card card-container">
     <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
     <p id="profile-name" class="profile-name-card"></p>
@@ -47,10 +47,41 @@
       <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Create Account</button>
       <button [routerLink]="['/login']" class="btn btn-lg btn-danger btn-block btn-cancel" type="button">Cancel</button>
 
-    </form><!-- /form -->
+    </form>/form
 
-  </div><!-- /card-container -->
-</div><!-- /container -->
+  </div>/card-container
+</div>/container -->
+
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+  <div class="row justify-content-center">
+    <form #registerForm="ngForm" (ngSubmit)="register()">
+        <div class="inputGroup inputGroup1">
+            <label for="text">Username</label>
+            <input type="text" id="username" name="username" [(ngModel)]="user.username" class="username" required/>
+          </div>
+      <div class="inputGroup inputGroup1">
+        <label for="email1">Email</label>
+        <input placeholder="email@domain.com" type="text" id="email" name="email" [(ngModel)]="user.email" class="email" maxlength="256" required/>
+      </div>
+      <div class="inputGroup inputGroup3">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password1" [(ngModel)]="user.password" class="password" required/>
+      </div>
+      <div class="inputGroup inputGroup4">
+        <label for="password">Ripeti Password</label>
+        <input type="password" id="password2" name="password2" [(ngModel)]="password2" class="password" required/>
+      </div>
+      <div class="inputGroup inputGroup5">
+        <button id="register" type="submit" [disabled]="registerForm.invalid">Registrati</button>
+      </div>
+      <!-- <div class="inputGroup inputGroup3">
+        <button id="login" type="submit" [disabled]="loginForm.invalid">Registrati</button>
+      </div> -->
+    </form>
+  </div>
+</div>
+
 
 
 

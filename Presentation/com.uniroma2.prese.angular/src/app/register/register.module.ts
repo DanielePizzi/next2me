@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register.component';
+import { RegisterService } from './register.service';
 
 const routes: Routes = [
   {
@@ -23,5 +24,6 @@ const routes: Routes = [
     RegisterComponent,
     RouterModule
   ],
+  providers: [RegisterService],
 })
 export class RegisterModule { }

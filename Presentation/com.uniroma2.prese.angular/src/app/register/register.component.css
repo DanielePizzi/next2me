@@ -1,144 +1,116 @@
-/*
- * Specific styles of signin component
- */
-/*
- * General styles
- */
-body, html {
-  height: 100%;
-  background-repeat: no-repeat;
-  background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
-}
-
-.card-container.card {
-  max-width: 350px;
-  padding: 40px 40px;
-}
-
-.btn {
-  font-weight: 700;
-  height: 36px;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: default;
-}
-
-/*
- * Card component
- */
-.card {
-  background-color: #F7F7F7;
-  /* just in case there no content*/
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  /* shadows and rounded borders */
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
+form {
+  /* position: absolute; */
+  /* top: 50%; */
+  margin-top:25px !important;
+  left: 50%;
+  /* -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%); */
   display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-
-/*
- * Form styles
- */
-.profile-name-card {
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  margin: 10px 0 0;
-  min-height: 1em;
-}
-
-.reauth-email {
-  display: block;
-  color: #404040;
-  line-height: 2;
-  margin-bottom: 10px;
-  font-size: 14px;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.form-signin #inputEmail,
-.form-signin #inputPassword {
-  direction: ltr;
-  height: 44px;
-  font-size: 16px;
-}
-
-.form-signin input[type=email],
-.form-signin input[type=password],
-.form-signin input[type=text],
-.form-signin button {
   width: 100%;
-  display: block;
-  margin-bottom: 10px;
-  z-index: 1;
-  position: relative;
-  -moz-box-sizing: border-box;
+  max-width: 400px;
+  background-color: #FFF;
+  margin: 0;
+  padding: 2.25em;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+          box-sizing: border-box;
+  border: solid 1px #DDD;
+  border-radius: .5em;
+  font-family: 'Source Sans Pro', sans-serif;
 }
-
-.form-signin .form-control:focus {
-  border-color: rgb(104, 145, 162);
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(104, 145, 162);
+form .inputGroup {
+  margin: 0 0 2em;
+  padding: 0;
+  position: relative;
 }
-
-.btn.btn-signin,.btn-cancel {
-  /*background-color: #4d90fe; */
-  background-color: rgb(104, 145, 162);
-  /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
-  padding: 0px;
+form .inputGroup:last-of-type {
+  margin-bottom: 0;
+}
+form label {
+  margin: 0 0 12px;
+  display: block;
+  font-size: 1.25em;
+  color: #217093;
   font-weight: 700;
-  font-size: 14px;
-  height: 36px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  font-family: inherit;
+}
+form input[type='email'], form input[type="text"], form input[type='password'] {
+  display: block;
+  margin: 0;
+  padding: 0 1em 0;
+  background-color: #f3fafd;
+  border: solid 2px #217093;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 65px;
+  font-size: 1.55em;
+  color: #353538;
+  font-weight: 600;
+  font-family: inherit;
+  -webkit-transition: border-color .25s ease-out, -webkit-box-shadow .2s linear;
+  transition: border-color .25s ease-out, -webkit-box-shadow .2s linear;
+  transition: box-shadow .2s linear, border-color .25s ease-out;
+  transition: box-shadow .2s linear, border-color .25s ease-out, -webkit-box-shadow .2s linear;
+}
+form input[type='email']:focus, form input[type="text"]:focus, form input[type='password']:focus {
+  outline: none;
+  -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  border: solid 2px #4eb8dd;
+}
+form input[type='email'], form input[type="text"] {
+  padding: 14px 1em 0px;
+}
+form button {
+  display: block;
+  margin: 0;
+  padding: .65em 1em 1em;
+  background-color: #4eb8dd;
   border: none;
-  -o-transition: all 0.218s;
-  -moz-transition: all 0.218s;
-  -webkit-transition: all 0.218s;
-  transition: all 0.218s;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  width: 100%;
+  height: 65px;
+  font-size: 1.55em;
+  color: #FFF;
+  font-weight: 600;
+  font-family: inherit;
+  -webkit-transition: background-color .2s ease-out;
+  transition: background-color .2s ease-out;
 }
-
-.btn.btn-cancel {
-  background-color: rgb(255, 34, 24);
+form button:hover, form button:active {
+  background-color: #217093;
 }
-.btn.btn-signin:hover,
-.btn.btn-signin:active,
-.btn.btn-signin:focus {
-  background-color: rgb(12, 97, 33);
+form .inputGroup1 .helper {
+  position: absolute;
+  z-index: 1;
+  font-family: inherit;
 }
-
-.forgot-password {
-  color: rgb(104, 145, 162);
+form .inputGroup1 .helper1 {
+  top: 0;
+  left: 0;
+  -webkit-transform: translate(1.4em, 2.6em) scale(1);
+          transform: translate(1.4em, 2.6em) scale(1);
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+  color: #217093;
+  font-size: 1.25em;
+  font-weight: 400;
+  opacity: .65;
+  pointer-events: none;
+  -webkit-transition: opacity .2s linear, -webkit-transform .2s ease-out;
+  transition: opacity .2s linear, -webkit-transform .2s ease-out;
+  transition: transform .2s ease-out, opacity .2s linear;
+  transition: transform .2s ease-out, opacity .2s linear, -webkit-transform .2s ease-out;
 }
-
-.forgot-password:hover,
-.forgot-password:active,
-.forgot-password:focus{
-  color: rgb(12, 97, 33);
+form .inputGroup1.focusWithText .helper {
+  /*input[type='email']:focus + .helper {*/
+  -webkit-transform: translate(1.4em, 2em) scale(0.65);
+          transform: translate(1.4em, 2em) scale(0.65);
+  opacity: 1;
 }

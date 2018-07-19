@@ -68,11 +68,13 @@ export class ApiService {
     //controllo che il servizio sia mappato
     if (!ENDPOINTS_MAP[url]) {
       console.warn(`Servizio '${url}' non trovato`)
+      this.loaderService.hide();
       endpoint = url;
     }
     //controllo che il servizio sia mappato correttaente nell'enpoint corrente.
     else if ((!ENDPOINTS_MAP[url][this.environmentService.selectedEnvironment.name])) {
       console.warn(`Servizio '${url}' non mappato '${this.environmentService.selectedEnvironment.name}' nell'endpoint dell'environments`)
+      this.loaderService.hide();
       endpoint = url;
     }
 

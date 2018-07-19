@@ -9,6 +9,7 @@ import { LoaderService } from './services/loader.service';
   providers : [LoaderService],
   declarations: []
 })
+
 export class CoreModule {
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {

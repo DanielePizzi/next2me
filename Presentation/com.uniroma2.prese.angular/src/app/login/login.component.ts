@@ -26,8 +26,6 @@ export class LoginComponent implements OnInit {
     (window as any).initialize();
   }
 
-
-
   ngOnInit() {
   }
 
