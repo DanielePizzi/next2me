@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
+import { placeEnum } from '../shared/enum/placeEnum';
 declare var google: any;
 
 @Component({
@@ -13,6 +14,11 @@ export class HomePageComponent implements OnInit {
   lat: number;
   lng: number;
   zoom: number;
+  toogle: boolean = false;
+  listOfPlace: any = placeEnum.listOFplace;
+  placeSelected:any;
+  placeWritten:any;
+  markers: marker[];
   private map: any;
   public searchControl: FormControl;
 
@@ -27,7 +33,10 @@ export class HomePageComponent implements OnInit {
   ngOnInit() {
     this.zoom = 10;
     this.caricaAutocompletamentoMappa();
+  }
 
+  toogleChange(){
+    this.toogle = !this.toogle;
   }
 
   mapReady($event: any) {
@@ -72,25 +81,32 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  private cercaDaQuery(){
+  cercaDaQuery(){
+    this.markers = [];
     let latLng = new google.maps.LatLng(this.lat, this.lng);
     let placeService = new google.maps.places.PlacesService(this.map);
     placeService.findPlaceFromQuery({
-      location: latLng,
-      radius: 500,
-      type: ['pub']
+      query: this.placeWritten,
+      fields: ['photos', 'formatted_address', 'name', 'rating', 'opening_hours', 'geometry'],
     }, (results, status) => {
       this.callback(results, status)
     });
   }
 
-  private cercaDaCategoria(){
+  cercaDaCategoria(){
+    this.markers = [];
+    let keySelected;
+    Object.keys(this.listOfPlace).forEach(key => {
+      if (this.listOfPlace[key].value === this.placeSelected) {
+          keySelected = this.listOfPlace[key].key;
+      }
+    });
     let latLng = new google.maps.LatLng(this.lat, this.lng);
     let placeService = new google.maps.places.PlacesService(this.map);
     placeService.nearbySearch({
       location: latLng,
-      radius: 500,
-      type: ['pub']
+      radius: 1000,
+      type: [keySelected]
     }, (results, status) => {
       this.callback(results, status)
     });
@@ -98,9 +114,14 @@ export class HomePageComponent implements OnInit {
 
   callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        console.log(results)
-      }
+      results.forEach(element => {
+        this.markers.push({
+          lat: element.geometry.location.lat(),
+          lng: element.geometry.location.lng(),
+          draggable: false,
+          name: element.name
+        })
+      });
     } else {
       alert("Servizio non disponibile")
     }

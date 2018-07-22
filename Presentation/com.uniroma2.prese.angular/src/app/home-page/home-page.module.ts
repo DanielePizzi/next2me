@@ -4,6 +4,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HomePageComponent } from './home-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
+import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -20,8 +22,10 @@ const routes: Routes = [
       apiKey: 'AIzaSyCRceEo_Xe9yYkhpjwPzrB8y_L2dCe4by0',
       libraries: ["places"]
     }),
+    AgmJsMarkerClustererModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [HomePageComponent],
   exports:[
