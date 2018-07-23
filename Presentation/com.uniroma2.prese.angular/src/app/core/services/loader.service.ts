@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs';
-import { LoaderState } from '../../interface/loader-state';
+import { LoaderState } from '../../shared/interface/loader-state';
 
 @Injectable()
 export class LoaderService {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoaderService } from './core/services/loader.service';
-import { LoaderState } from './interface/loader-state';
+import { LoaderState } from './shared/interface/loader-state';
 
 @Component({
   selector: 'app-root',

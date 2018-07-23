@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import { placeEnum } from '../shared/enum/placeEnum';
@@ -7,7 +7,8 @@ declare var google: any;
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss']
+  styleUrls: ['./home-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class HomePageComponent implements OnInit {
 
@@ -18,7 +19,7 @@ export class HomePageComponent implements OnInit {
   listOfPlace: any = placeEnum.listOFplace;
   placeSelected:any;
   placeWritten:any;
-  markers: marker[];
+  markers: marker[] = [];
   private map: any;
   public searchControl: FormControl;
 
@@ -31,7 +32,7 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.zoom = 10;
+    this.zoom = 12;
     this.caricaAutocompletamentoMappa();
   }
 
@@ -63,7 +64,6 @@ export class HomePageComponent implements OnInit {
           //set latitude, longitude and zoom
           this.lat = place.geometry.location.lat();
           this.lng = place.geometry.location.lng();
-          this.zoom = 12;
         });
       });
     });
@@ -82,7 +82,6 @@ export class HomePageComponent implements OnInit {
   }
 
   cercaDaQuery(){
-    this.markers = [];
     let latLng = new google.maps.LatLng(this.lat, this.lng);
     let placeService = new google.maps.places.PlacesService(this.map);
     placeService.findPlaceFromQuery({
@@ -94,7 +93,6 @@ export class HomePageComponent implements OnInit {
   }
 
   cercaDaCategoria(){
-    this.markers = [];
     let keySelected;
     Object.keys(this.listOfPlace).forEach(key => {
       if (this.listOfPlace[key].value === this.placeSelected) {
@@ -105,7 +103,7 @@ export class HomePageComponent implements OnInit {
     let placeService = new google.maps.places.PlacesService(this.map);
     placeService.nearbySearch({
       location: latLng,
-      radius: 1000,
+      radius: 2000,
       type: [keySelected]
     }, (results, status) => {
       this.callback(results, status)
@@ -113,11 +111,12 @@ export class HomePageComponent implements OnInit {
   }
 
   callback(results, status) {
+    this.markers = [];
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       results.forEach(element => {
         this.markers.push({
-          lat: element.geometry.location.lat(),
-          lng: element.geometry.location.lng(),
+          lat: +element.geometry.location.lat(),
+          lng: +element.geometry.location.lng(),
           draggable: false,
           name: element.name
         })

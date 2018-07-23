@@ -33,16 +33,16 @@
       </div>
     </div>
   </div>
-  <div #map class="map">
+  <div class="map">
     <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" (mapReady)="mapReady($event)">
       <agm-marker [latitude]="lat" [longitude]="lng">
         <agm-info-window>
           <strong>Posizione Corrente</strong>
         </agm-info-window>
       </agm-marker>
-      <agm-marker-cluster imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m">
+      <agm-marker-cluster imagePath="./assets/img/m">
         <agm-marker
-          *ngFor="let m of markers; let i = index"
+          *ngFor="let m of markers;let i = index;"
           [latitude]="m.lat"
           [longitude]="m.lng"
           [label]="m.label">
