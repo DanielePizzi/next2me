@@ -1,8 +1,34 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, NgZone, ChangeDetectionStrategy, Input } from '@angular/core';
+import { AgmMap } from '@agm/core';
 import { MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import { placeEnum } from '../shared/enum/placeEnum';
+import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 declare var google: any;
+
+@Component({
+  selector: 'ngbd-modal-content',
+  template: `
+    <div class="modal-header">
+      <h4 class="modal-title">Attenzione</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>{{name}}!</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+  `
+})
+export class NgbdModalContent {
+  @Input() name;
+
+  constructor(public activeModal: NgbActiveModal) {}
+}
+
 
 @Component({
   selector: 'app-home-page',
@@ -26,9 +52,13 @@ export class HomePageComponent implements OnInit {
   @ViewChild("search")
   public searchElementRef: ElementRef;
 
+  @ViewChild(AgmMap)
+  public agmMap: AgmMap
+
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -113,16 +143,19 @@ export class HomePageComponent implements OnInit {
   callback(results, status) {
     this.markers = [];
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      results.forEach(element => {
-        this.markers.push({
+      const markerT = results.map( (element) => {
+        return  {
           lat: +element.geometry.location.lat(),
           lng: +element.geometry.location.lng(),
           draggable: false,
-          name: element.name
+          name: element.name }
         })
-      });
+      this.markers = markerT;
+      this.agmMap.triggerResize();
     } else {
-      alert("Servizio non disponibile")
+      this.agmMap.triggerResize();
+      const modalRef = this.modalService.open(NgbdModalContent,{ centered: true });
+      modalRef.componentInstance.name = 'NESSUN PUNTO DI INTERESSE TROVATO';
     }
   }
 

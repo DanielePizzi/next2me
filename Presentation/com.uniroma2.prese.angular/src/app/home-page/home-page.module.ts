@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HomePageComponent } from './home-page.component';
+import { HomePageComponent, NgbdModalContent } from './home-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SharedModule } from '../shared/shared.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 const routes: Routes = [
   {
@@ -18,16 +20,18 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCRceEo_Xe9yYkhpjwPzrB8y_L2dCe4by0',
-      libraries: ["places"]
-    }),
+    AgmCoreModule,
     AgmJsMarkerClustererModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ],
-  declarations: [HomePageComponent],
+  declarations: [
+    HomePageComponent,
+    NgbdModalContent
+  ],
+  entryComponents: [NgbdModalContent],
   exports:[
     HomePageComponent,
     RouterModule

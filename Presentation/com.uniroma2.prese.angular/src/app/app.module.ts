@@ -14,6 +14,8 @@ import { ApiService } from './shared/api-service/api-service';
 import { environments } from '../environments/ALL-ENVIRONMENTS';
 import { environment } from '../environments/environment';
 import { EnvironmentService } from './shared/environment-service/environment-service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgmCoreModule } from '@agm/core';
 
 export function loadEnv(environments,environment) {
   return new EnvironmentService(environments,environment)
@@ -30,6 +32,11 @@ export function loadEnv(environments,environment) {
     AppRoutingModule,
     CoreModule,
     SharedModule,
+    NgbModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCRceEo_Xe9yYkhpjwPzrB8y_L2dCe4by0',
+      libraries: ["places"]
+    }),
   ],
   providers: [
     {provide: 'ENVIRONMENTS',useValue: environments},
