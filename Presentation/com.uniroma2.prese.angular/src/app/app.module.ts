@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpModule } from '@angular/http';
 import { AuthService } from './services/auth.service';
-import { AccountService } from './services/account.service';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -48,7 +47,6 @@ export function loadEnv(environments,environment) {
     },
     ApiService,
     AuthService,
-    AccountService,
     UrlPermission],
   bootstrap: [AppComponent]
 })

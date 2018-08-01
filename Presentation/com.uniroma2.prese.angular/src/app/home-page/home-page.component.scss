@@ -10,13 +10,16 @@ agm-map {
   margin-top: 25px;
 }
 
-.bottoneRicerca{
+.bottoneRicerca, .bottoneRicerca:disabled:hover{
   background-color: white;
+}
+
+.bottoneRicerca:disabled:hover{
+  cursor: not-allowed;
 }
 
 .bottoneRicerca:hover{
   background-color: cornflowerblue;
-
 }
 
 // .btn-toggle.active {

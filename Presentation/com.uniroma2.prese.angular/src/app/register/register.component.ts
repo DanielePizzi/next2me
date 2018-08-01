@@ -12,7 +12,9 @@ import { RegisterService } from './register.service';
 export class RegisterComponent implements OnInit {
 
   user: User = new User();
+  password2:string = null;
   errorMessage: string;
+  barLabel: string = "Robustezza password:";
 
   constructor(
     private registerService: RegisterService,
@@ -27,7 +29,6 @@ export class RegisterComponent implements OnInit {
       console.log(data);
       }, err => {
         console.log(err);
-
       }
     )
   }

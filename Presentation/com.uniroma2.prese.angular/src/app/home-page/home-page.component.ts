@@ -4,10 +4,13 @@ import { MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import { placeEnum } from '../shared/enum/placeEnum';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { PointOfInterest } from '../model/pointOfInterest';
+import Utils from '../shared/utils/Utils';
 declare var google: any;
 
 @Component({
   selector: 'ngbd-modal-content',
+  styles: ['.modal-header{background-color: yellow;}'] ,
   template: `
     <div class="modal-header">
       <h4 class="modal-title">Attenzione</h4>
@@ -46,6 +49,7 @@ export class HomePageComponent implements OnInit {
   placeSelected:any;
   placeWritten:any;
   markers: marker[] = [];
+  pointOfInteresList: PointOfInterest[] = [];
   private map: any;
   public searchControl: FormControl;
 
@@ -142,6 +146,7 @@ export class HomePageComponent implements OnInit {
 
   callback(results, status) {
     this.markers = [];
+    this.pointOfInteresList = []
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       const markerT = results.map( (element) => {
         return  {
@@ -150,6 +155,18 @@ export class HomePageComponent implements OnInit {
           draggable: false,
           name: element.name }
         })
+      this.pointOfInteresList = results.map((element) => {
+        return  {
+          id: element.id,
+          via: element.vicinity,
+          nome: element.name,
+          distanza: Utils.calculateDistanceFromPoint(this.lat,this.lng,+element.geometry.location.lat(),+element.geometry.location.lng(),'K'),
+          stato: element.opening_hours ? element.opening_hours.open_now : false,
+          rating: element.rating}
+        })
+      this.pointOfInteresList.sort(function(a,b){
+        return Number(a.distanza) - Number(b.distanza);
+      })
       this.markers = markerT;
       this.agmMap.triggerResize();
     } else {

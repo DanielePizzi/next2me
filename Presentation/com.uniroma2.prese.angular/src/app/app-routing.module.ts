@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'homePage', loadChildren: 'app/home-page/home-page.module#HomePageModule'},
   { path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
   { path: 'register', loadChildren: 'app/register/register.module#RegisterModule' },
-  { path: 'profile', loadChildren: 'app/profile/profile.module#ProfileModule' ,canActivate: [UrlPermission] }
+  { path: 'areaPrivata', loadChildren: 'app/area-privata/area-privata.module#AreaPrivataModule', canActivate: [UrlPermission] },
+  // { path: 'profile', loadChildren: 'app/profile/profile.module#ProfileModule' ,canActivate: [UrlPermission] }
 ];
 
 @NgModule({

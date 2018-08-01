@@ -1,58 +1,4 @@
 
-
-<!-- <div class="container">
-  <div class="card card-container">
-    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-    <p id="profile-name" class="profile-name-card"></p>
-
-    <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
-      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">{{errorMessage}}</div>
-      <span id="reauth-email" class="reauth-email"></span>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !fullName.valid }">
-        <label for="fullName">Full Name</label>
-        <input type="text" class="form-control" name="fullName" id="fullName" [(ngModel)]="user.fullName" #fullName="ngModel" required />
-        <div *ngIf="f.submitted && !fullName.valid" class="help-block">The full Name is required</div>
-      </div>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-        <label for="username">Email Address</label>
-        <input type="text" class="form-control" name="username" id="username" pattern="[^ @]*@[^ @]*" [(ngModel)]="user.username" #username="ngModel" required />
-        <div *ngIf="f.submitted && !username.valid" class="help-block">
-
-          <div *ngIf="username.errors.required">
-            Email is required.
-          </div>
-          <div *ngIf="username.errors.pattern">
-            A valid email address is required
-          </div>
-
-        </div>
-      </div>
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" id="password"[(ngModel)]="user.password" #password="ngModel" required minlength="4" />
-        <div *ngIf="f.submitted && !password.valid" class="help-block">
-
-          <div *ngIf="password.errors.required">
-            password is required.
-          </div>
-          <div *ngIf="password.errors.minlength">
-            password must be at least 4 characters long.
-          </div>
-
-        </div>
-      </div>
-      <div id="remember" class="checkbox">
-
-      </div>
-      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Create Account</button>
-      <button [routerLink]="['/login']" class="btn btn-lg btn-danger btn-block btn-cancel" type="button">Cancel</button>
-
-    </form>/form
-
-  </div>/card-container
-</div>/container -->
-
-<!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
   <div class="row justify-content-center">
     <form #registerForm="ngForm" (ngSubmit)="register()">
@@ -62,22 +8,29 @@
           </div>
       <div class="inputGroup inputGroup1">
         <label for="email1">Email</label>
-        <input placeholder="email@domain.com" type="text" id="email" name="email" [(ngModel)]="user.email" class="email" maxlength="256" required/>
+        <input placeholder="email@dominio.com" type="text" id="email" class="email" name="email" [(ngModel)]="user.email" #email="ngModel" maxlength="256" required pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"/>
+        <span *ngIf="!email.valid && user.email" class="badge badge-danger">Formato mail non valido</span>
       </div>
       <div class="inputGroup inputGroup3">
         <label for="password">Password</label>
         <input type="password" id="password" name="password1" [(ngModel)]="user.password" class="password" required/>
+        <password-strength-bar
+        [passwordToCheck]="user.password"
+        [barLabel]="barLabel">
+      </password-strength-bar>
       </div>
       <div class="inputGroup inputGroup4">
         <label for="password">Ripeti Password</label>
         <input type="password" id="password2" name="password2" [(ngModel)]="password2" class="password" required/>
+        <password-strength-bar
+          [passwordToCheck]="password2"
+          [barLabel]="barLabel">
+        </password-strength-bar>
+      <span *ngIf="user.password != password2 && password2" class="badge badge-danger">Attenzione password diversa</span>
       </div>
       <div class="inputGroup inputGroup5">
-        <button id="register" type="submit" [disabled]="registerForm.invalid">Registrati</button>
+        <button id="register" type="submit" [disabled]="registerForm.invalid || user.password != password2">Registrati</button>
       </div>
-      <!-- <div class="inputGroup inputGroup3">
-        <button id="login" type="submit" [disabled]="loginForm.invalid">Registrati</button>
-      </div> -->
     </form>
   </div>
 </div>

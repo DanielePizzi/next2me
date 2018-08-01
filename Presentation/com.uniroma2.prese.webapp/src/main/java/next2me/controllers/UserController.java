@@ -7,8 +7,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,18 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import next2me.abstracts.AbstractRequest;
 import next2me.abstracts.AbstractResponse;
 import next2me.abstracts.AbstractRestController;
 import next2me.command.ICommandFactory;
 import next2me.enums.ErrorEnum;
 import next2me.model.request.LoginRequest;
 import next2me.model.request.RegisterRequest;
-import next2me.model.request.TestInput;
 import next2me.model.response.LoginResponse;
 import next2me.model.response.RegisterResponse;
-import next2me.model.response.TestOutput;
 import next2me.utils.ErrorHandler;
 
 @RestController
@@ -79,7 +73,7 @@ public class UserController extends AbstractRestController {
 	// metodo per la login
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<AbstractResponse> login(@Valid @RequestBody LoginRequest loginUser, Errors errors) {
+	public @ResponseBody ResponseEntity<AbstractResponse> login(@Valid @RequestBody LoginRequest loginUser,Principal principal, Errors errors) {
 
 //		logger.info("user logged "+principal);
 //		return principal;
@@ -98,6 +92,7 @@ public class UserController extends AbstractRestController {
 		
 		logger.info("End controller [" + methodName + "]");
 		
+		logger.info("user logged "+principal);
 		return this.buildResponse(loginUser, output);
 //		
 //		newUser.setRole("USER");
