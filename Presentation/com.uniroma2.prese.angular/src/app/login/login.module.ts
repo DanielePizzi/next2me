@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login.component';
 import '../../assets/login-animation.js';
+import { LoginService } from './login.service';
 
 const routes: Routes = [
   {
@@ -23,5 +24,6 @@ const routes: Routes = [
     LoginComponent,
     RouterModule
   ],
+  providers: [LoginService],
 })
 export class LoginModule { }

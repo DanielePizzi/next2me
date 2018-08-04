@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {Router} from "@angular/router";
 import { User } from '../model/model.user';
-import { AuthService } from '../services/auth.service';
-import { LoaderService } from '../core/services/loader.service';
+import { LoginService } from './login.service';
+import { SessionService } from '../core/services/session.service';
 
 
 @Component({
@@ -15,12 +15,11 @@ export class LoginComponent implements OnInit {
 
   user: User=new User();
   errorMessage:string;
-  email: string;
-  password: string;
 
-  constructor(private authService :AuthService,
+  constructor(private loginService: LoginService,
               private router: Router,
-              private loaderService:LoaderService) { }
+              private sessionService: SessionService
+            ) { }
 
   ngAfterViewInit() {
     (window as any).initialize();
@@ -30,13 +29,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    // this.authService.logIn(this.user)
-    //   .subscribe(data=>{
-    //     this.router.navigate(['/profile']);
-    //     },err=>{
-    //     this.errorMessage="error :  Username or password is incorrect";
-    //     }
-    //   )
-    // this.loaderService.show();
+    this.loginService.login(this.user).subscribe(data => {
+      this.sessionService.changeToken(data.token_sessione);
+      this.router.navigate(['/areaPrivata']);
+    })
   }
 }

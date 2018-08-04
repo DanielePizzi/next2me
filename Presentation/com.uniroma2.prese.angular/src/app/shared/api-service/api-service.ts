@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Request, RequestOptions, RequestMethod, Response, ResponseContentType } from '@angular/http';
+import { Http, Headers, Request, RequestOptions, RequestMethod, Response} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { ENDPOINTS_MAP } from './endpoints-map';
 import { EnvironmentService } from "../environment-service/environment-service";
 import { Subscription } from "rxjs/Subscription";
-import { ResponseError } from "../../model/model.responseError";
-import 'rxjs/add/operator/catch';
 import { LoaderService } from "../../core/services/loader.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbdModalContentError } from "../../app.component";
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ApiService {
@@ -18,7 +21,8 @@ export class ApiService {
   constructor(
     private http: Http,
     public environmentService: EnvironmentService,
-    private loaderService : LoaderService
+    private loaderService : LoaderService,
+    private modalService: NgbModal
   ) {
     this.envsubscription = this.environmentService.get().subscribe((data) => {
       if (data) {
@@ -53,7 +57,9 @@ export class ApiService {
         return res.json();
       })
       // .catch((res: Response) => this.requestError(res));
-      .catch((e: any) => Observable.throw(this.errorHandler(e)));
+      .catch((err:Response) =>{
+        return Observable.throw(this.errorHandler(err));
+     });
   }
 
   private headersManager(requestMethod: RequestMethod): Headers {
@@ -86,7 +92,17 @@ export class ApiService {
 
   errorHandler(error: any): void {
     this.loaderService.hide();
-    console.log(error)
+    let details = error.json();
+    const modalRef = this.modalService.open(NgbdModalContentError,{ centered: true });
+    modalRef.componentInstance.title = error.status + ' ,' + error.statusText;
+    if (details && details.errorList) {
+      details.errorList = details.errorList.map(function(item) {
+        return item = item.replace(/_/g, ' ');
+      });
+      modalRef.componentInstance.errors = details.errorList;
+    } else {
+      modalRef.componentInstance.errors = ['Codice di errore non trovato']
+    }
   }
 
   // private requestError(res: Response | any) {

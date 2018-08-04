@@ -1,7 +1,5 @@
 package next2me.controllers;
 
-import java.security.Principal;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -15,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import next2me.abstracts.AbstractResponse;
 import next2me.abstracts.AbstractRestController;
+import next2me.bean.SessionBean;
 import next2me.command.ICommandFactory;
 import next2me.enums.ErrorEnum;
 import next2me.model.request.LoginRequest;
@@ -33,6 +33,9 @@ public class UserController extends AbstractRestController {
 	
 	@Autowired
 	private ICommandFactory commandFactory;
+	
+	@Autowired
+	private SessionBean sessionBean;
 
 	// metodo per creare un nuovo utente
 	@CrossOrigin
@@ -60,7 +63,6 @@ public class UserController extends AbstractRestController {
 		}
 		
 		logger.info("End controller [" + methodName + "]");
-		
 		return this.buildResponse(newUser, output);
 //		
 //		newUser.setRole("USER");
@@ -73,7 +75,7 @@ public class UserController extends AbstractRestController {
 	// metodo per la login
 	@CrossOrigin
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<AbstractResponse> login(@Valid @RequestBody LoginRequest loginUser,Principal principal, Errors errors) {
+	public @ResponseBody ResponseEntity<AbstractResponse> login(@Valid @RequestBody LoginRequest loginUser, Errors errors) {
 
 //		logger.info("user logged "+principal);
 //		return principal;
@@ -92,7 +94,6 @@ public class UserController extends AbstractRestController {
 		
 		logger.info("End controller [" + methodName + "]");
 		
-		logger.info("user logged "+principal);
 		return this.buildResponse(loginUser, output);
 //		
 //		newUser.setRole("USER");

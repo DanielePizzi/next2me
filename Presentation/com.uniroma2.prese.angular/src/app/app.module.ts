@@ -2,13 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
+import { AppComponent, NgbdModalContentError } from './app.component';
 import { HttpModule } from '@angular/http';
-import { AuthService } from './services/auth.service';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { UrlPermission } from './shared/urlPermission/url.permission';
 import { ApiService } from './shared/api-service/api-service';
 import { environments } from '../environments/ALL-ENVIRONMENTS';
 import { environment } from '../environments/environment';
@@ -22,7 +20,8 @@ export function loadEnv(environments,environment) {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NgbdModalContentError
   ],
   imports: [
     BrowserModule,
@@ -33,7 +32,7 @@ export function loadEnv(environments,environment) {
     SharedModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCRceEo_Xe9yYkhpjwPzrB8y_L2dCe4by0',
+      apiKey: 'apy-key',
       libraries: ["places"]
     }),
   ],
@@ -45,9 +44,8 @@ export function loadEnv(environments,environment) {
       useFactory: loadEnv,
       deps: ['ENVIRONMENTS','DEFAULT_ENVIRONMENT']
     },
-    ApiService,
-    AuthService,
-    UrlPermission],
+    ApiService],
+    entryComponents:[NgbdModalContentError],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

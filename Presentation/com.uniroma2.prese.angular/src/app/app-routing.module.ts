@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { UrlPermission } from "./shared/urlPermission/url.permission";
+import { UrlPermission } from "./core/services/url.permission";
 
 const routes: Routes = [
   // otherwise redirect to profile

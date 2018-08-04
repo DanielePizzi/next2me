@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from "@angular/router";
 import { User } from '../model/model.user';
 import { RegisterService } from './register.service';
+import { SessionService } from '../core/services/session.service';
 
 @Component({
   selector: 'app-register',
@@ -18,18 +19,17 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private registerService: RegisterService,
-    private router: Router) {}
+    private router: Router,
+    private sessionService: SessionService
+  ) {}
 
   ngOnInit() {
   }
 
   register() {
-    console.log(this.user);
     this.registerService.creaAccount(this.user).subscribe(data => {
-      console.log(data);
-      }, err => {
-        console.log(err);
-      }
-    )
+      this.sessionService.changeToken(data.token_sessione);
+      this.router.navigate(['/areaPrivata']);
+    })
   }
 }

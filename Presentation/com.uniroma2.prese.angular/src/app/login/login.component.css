@@ -115,6 +115,16 @@ form button {
 form button:hover, form button:active {
   background-color: #217093;
 }
+
+form button:active {
+  cursor: pointer;
+}
+
+form button:disabled:hover{
+  background-color: red;
+  cursor: not-allowed;
+}
+
 form .inputGroup1 .helper {
   position: absolute;
   z-index: 1;

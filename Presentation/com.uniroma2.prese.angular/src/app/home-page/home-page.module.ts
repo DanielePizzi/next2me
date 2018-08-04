@@ -27,7 +27,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule,
     NgbModule,
-    RatingModule
+    RatingModule,
   ],
   declarations: [
     HomePageComponent,

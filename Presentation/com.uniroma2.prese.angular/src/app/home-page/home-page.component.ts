@@ -6,6 +6,7 @@ import { placeEnum } from '../shared/enum/placeEnum';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { PointOfInterest } from '../model/pointOfInterest';
 import Utils from '../shared/utils/Utils';
+import { LoaderService } from '../core/services/loader.service';
 declare var google: any;
 
 @Component({
@@ -26,6 +27,7 @@ declare var google: any;
     </div>
   `
 })
+
 export class NgbdModalContent {
   @Input() name;
 
@@ -62,7 +64,8 @@ export class HomePageComponent implements OnInit {
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private loaderService : LoaderService,
   ) {}
 
   ngOnInit() {
@@ -118,11 +121,13 @@ export class HomePageComponent implements OnInit {
   cercaDaQuery(){
     let latLng = new google.maps.LatLng(this.lat, this.lng);
     let placeService = new google.maps.places.PlacesService(this.map);
+    this.loaderService.show();
     placeService.findPlaceFromQuery({
       query: this.placeWritten,
       fields: ['photos', 'formatted_address', 'name', 'rating', 'opening_hours', 'geometry'],
     }, (results, status) => {
       this.callback(results, status)
+      this.loaderService.hide();
     });
   }
 
@@ -135,11 +140,13 @@ export class HomePageComponent implements OnInit {
     });
     let latLng = new google.maps.LatLng(this.lat, this.lng);
     let placeService = new google.maps.places.PlacesService(this.map);
+    this.loaderService.show();
     placeService.nearbySearch({
       location: latLng,
       radius: 2000,
       type: [keySelected]
     }, (results, status) => {
+      this.loaderService.hide();
       this.callback(results, status)
     });
   }
