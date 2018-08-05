@@ -5,4 +5,10 @@ export const ENDPOINTS_MAP = {
   'login':{
     'dev':'/user/login'
   },
+  'isLogged':{
+    'dev':'/user/isLogged'
+  },
+  'logout':{
+    'dev':'/user/logout'
+  },
 }

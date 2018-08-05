@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { AppComponent, NgbdModalContentError } from './app.component';
+import { AppComponent} from './app.component';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { EnvironmentService } from './shared/environment-service/environment-service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
+import { NgbdModalContentError } from './shared/components/NgbdModalContentError';
 
 export function loadEnv(environments,environment) {
   return new EnvironmentService(environments,environment)
@@ -21,7 +22,6 @@ export function loadEnv(environments,environment) {
 @NgModule({
   declarations: [
     AppComponent,
-    NgbdModalContentError
   ],
   imports: [
     BrowserModule,
@@ -32,7 +32,7 @@ export function loadEnv(environments,environment) {
     SharedModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'apy-key',
+      apiKey: '',
       libraries: ["places"]
     }),
   ],
@@ -44,8 +44,9 @@ export function loadEnv(environments,environment) {
       useFactory: loadEnv,
       deps: ['ENVIRONMENTS','DEFAULT_ENVIRONMENT']
     },
-    ApiService],
-    entryComponents:[NgbdModalContentError],
+    ApiService,
+  ],
+  entryComponents:[NgbdModalContentError],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

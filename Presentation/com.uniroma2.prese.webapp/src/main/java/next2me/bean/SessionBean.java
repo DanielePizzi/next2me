@@ -1,22 +1,29 @@
 package next2me.bean;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SessionBean {
 
-	String token_session;
+	private User user;
 
 	/**
-	 * @return the token_session
+	 * @return the user
 	 */
-	public String getToken_session() {
-		return token_session;
+	public User getUser() {
+		return user;
 	}
 
 	/**
-	 * @param token_session the token_session to set
+	 * @param user the user to set
 	 */
-	public void setToken_session(String token_session) {
-		this.token_session = token_session;
+	public void setUser(User user) {
+		this.user = user;
 	}
+	
 	
 	
 }

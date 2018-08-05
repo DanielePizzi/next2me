@@ -2,7 +2,8 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderService } from './services/loader.service';
 import { SessionService } from './services/session.service';
-import { UrlPermission } from './services/url.permission';
+import { UrlPermissionAreaPrivata, UrlPermissionLogging } from './services/url.permission';
+import { LoggedService } from './services/loggedService';
 
 @NgModule({
   imports: [
@@ -11,7 +12,9 @@ import { UrlPermission } from './services/url.permission';
   providers : [
     LoaderService,
     SessionService,
-    UrlPermission
+    UrlPermissionAreaPrivata,
+    UrlPermissionLogging,
+    LoggedService
   ],
   declarations: []
 })

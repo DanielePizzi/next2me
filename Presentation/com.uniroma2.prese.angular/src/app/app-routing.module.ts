@@ -1,20 +1,13 @@
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { UrlPermission } from "./core/services/url.permission";
+import { UrlPermissionAreaPrivata, UrlPermissionLogging } from "./core/services/url.permission";
 
 const routes: Routes = [
-  // otherwise redirect to profile
-  // { path: '', redirectTo: '/login' , pathMatch: 'full'},
-  // { path: 'profile', component: ProfileComponent ,canActivate: [UrlPermission] },
-  // { path: 'login', component: LoginComponent },
-  // { path: 'register', component: RegisterComponent }
-  // otherwise redirect to profile
   { path: '', redirectTo: '/homePage' , pathMatch: 'full'},
   { path: 'homePage', loadChildren: 'app/home-page/home-page.module#HomePageModule'},
-  { path: 'login', loadChildren: 'app/login/login.module#LoginModule' },
-  { path: 'register', loadChildren: 'app/register/register.module#RegisterModule' },
-  { path: 'areaPrivata', loadChildren: 'app/area-privata/area-privata.module#AreaPrivataModule', canActivate: [UrlPermission] },
-  // { path: 'profile', loadChildren: 'app/profile/profile.module#ProfileModule' ,canActivate: [UrlPermission] }
+  { path: 'login', loadChildren: 'app/login/login.module#LoginModule' , canActivate: [UrlPermissionLogging]  },
+  { path: 'register', loadChildren: 'app/register/register.module#RegisterModule' , canActivate: [UrlPermissionLogging]  },
+  { path: 'areaPrivata', loadChildren: 'app/area-privata/area-privata.module#AreaPrivataModule', canActivate: [UrlPermissionAreaPrivata] },
 ];
 
 @NgModule({

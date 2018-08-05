@@ -19,8 +19,8 @@
 	<mvc:annotation-driven />
     <import resource="serviceCenter.xml" />
     
-    <bean id="sessionBean" class="next2me.bean.SessionBean" scope="session">     
-      <aop:scoped-proxy/>
-  	</bean>  
+<!--     <bean id="sessionBean" class="next2me.bean.SessionBean" scope="session">      -->
+<!--       <aop:scoped-proxy/> -->
+<!--   	</bean>   -->
 
 </beans>

@@ -55,6 +55,7 @@ public class LoginService extends AbstractService{
 			logger.debug(String.format("%s - %s::*****************************",CLASS,methodName));
 		} else if (CryptPassword.cryptWithMD5(password).equals(result.getPassword())) {
 			out.setToken_sessione(SessionToken.getSessionToken());
+			out.setNome(result.getNome());
 			logger.debug(String.format("%s - %s::user[%s]",CLASS,methodName,result.toString()));
 			logger.debug(String.format("%s - %s::response[%s]",CLASS,methodName,response.toString()));
 			logger.debug(String.format("%s - %s::*****************************",CLASS,methodName));

@@ -6,10 +6,10 @@ import { EnvironmentService } from "../environment-service/environment-service";
 import { Subscription } from "rxjs/Subscription";
 import { LoaderService } from "../../core/services/loader.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgbdModalContentError } from "../../app.component";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
+import { NgbdModalContentError } from "../components/NgbdModalContentError";
 
 @Injectable()
 export class ApiService {
@@ -36,13 +36,18 @@ export class ApiService {
     return this.request(url, RequestMethod.Post, body);
   }
 
+  get(url: string,) {
+    return this.request(url, RequestMethod.Get);
+  }
+
   request(url: string, method: RequestMethod, body?: Object, queryParams?: any, pathParams?: any[]) {
     const headers: Headers = this.headersManager(method);
 
     const requestOptions = new RequestOptions({
       url: this.getEnpointCorrente(url),
       method: method,
-      headers: headers
+      headers: headers,
+      withCredentials: true
     });
 
     if (body) {
@@ -63,7 +68,7 @@ export class ApiService {
   }
 
   private headersManager(requestMethod: RequestMethod): Headers {
-    const headers = new Headers();
+    const headers = new Headers({ 'Content-Type': 'application/json;' });
     return headers;
   }
 
@@ -94,7 +99,8 @@ export class ApiService {
     this.loaderService.hide();
     let details = error.json();
     const modalRef = this.modalService.open(NgbdModalContentError,{ centered: true });
-    modalRef.componentInstance.title = error.status + ' ,' + error.statusText;
+    const errorText = error.statusText ? error.statusText != '' : 'errore Sconosciuto'
+    modalRef.componentInstance.title = error.status + ' ,' + errorText;
     if (details && details.errorList) {
       details.errorList = details.errorList.map(function(item) {
         return item = item.replace(/_/g, ' ');
@@ -104,21 +110,5 @@ export class ApiService {
       modalRef.componentInstance.errors = ['Codice di errore non trovato']
     }
   }
-
-  // private requestError(res: Response | any) {
-  //   let errMsg: string;
-  //   if (res instanceof Response) {
-  //     const err = res || '';
-  //     errMsg = `${res.status} - ${res.statusText || ''} ${err}`;
-  //   } else {
-  //     errMsg = res.message ? res.message : res.toString();
-  //   }
-  //   let dataError = new ResponseError();
-  //   dataError.code = res.status;
-  //   dataError.message = res.statusText;
-  //   dataError.url = res.url;
-  //   dataError.body = (res && res.json()) || {};
-  //   return Observable.throw(dataError);
-  // }
 
 }
