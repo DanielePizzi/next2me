@@ -15,8 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from '@agm/core';
 import { NgbdModalContentError } from './shared/components/NgbdModalContentError';
 
-export function loadEnv(environments,environment) {
-  return new EnvironmentService(environments,environment)
+export function loadEnv(environments, environment) {
+  return new EnvironmentService(environments, environment)
 }
 
 @NgModule({
@@ -32,7 +32,7 @@ export function loadEnv(environments,environment) {
     SharedModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: '',
+      apiKey: 'AIzaSyCXOEdgZmeen95WzI3ACAFPIpFTzIDPdUI',
       libraries: ["places"]
     }),
   ],

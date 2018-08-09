@@ -1,3 +1,128 @@
-<p>
-  area-privata works!
-</p>
+
+<!-- Container for sidebar(s) + page content -->
+<ng-sidebar-container style="height: 100vh;">
+
+    <!-- A sidebar -->
+    <ng-sidebar
+      [(opened)]="_opened"
+      position="left"
+      [dock]="true"
+      [dockedSize]="'25px'"
+      [showBackdrop]="_showBackdrop"
+      [closeOnClickOutside]="_closeOnClickOutside"
+      [closeOnClickBackdrop]="_closeOnClickBackdrop"
+      [mode]="_mode"
+      [sidebarClass]="'privata-sidebar'">
+      <p>Inserisci la descrizione del punto di interesse da aggiungere</p>
+      <hr>
+      <form #salvaPuntoInteresseForm="ngForm">
+        <div class="form-group">
+          <label for="nome">Nome <span>*</span></label>
+          <input type="text" class="form-control" id="nome" name="nome" [(ngModel)]="nome" placeholder="museo di storia....." required>
+        </div>
+        <div class="form-group">
+          <label for="citta">città <span>*</span></label>
+          <input type="text" class="form-control" id="citta" name="citta" [(ngModel)]="citta" placeholder="Roma,Milano,...." required>
+        </div>
+        <div class="form-group">
+          <label for="stato">stato</label>
+          <input type="text" class="form-control" name="stato" [(ngModel)]="stato" id="stato">
+        </div>
+        <div class="form-group ">
+          <label for="categoria">Scegli una categoria <span>*</span></label>
+          <select id="categoria" class="form-control" name="categoria" [(ngModel)]="categoria" required>
+            <option selected>Scegli...</option>
+            <option>...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="descrizione">Inserisci una descrizione <span>*</span></label>
+          <textarea class="form-control" id="descrizione" rows="3" name="descrizione" [(ngModel)]="descrizione" required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <button type="submit" class="btn btn-success" [disabled]="salvaPuntoInteresseForm.invalid">Salva</button>
+          </div>
+          <div class="col">
+              <button type="submit" class="btn btn-warning float-center" (click)="cancellaPuntoInteresseDaSalvare()">Rimuovi</button>
+          </div>
+          <div class="col">
+              <button type="submit" class="btn btn-danger float-right" (click)="_toggleSidebar()">Chiudi</button>
+          </div>
+        </div>
+      </form>
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+      <button (click)="_toggleSidebar()">Toggle sidebar</button>
+
+      <div class = "container-fluid" class="privata-sidebar-contents">
+          <div class="row form-group">
+            <div class="col-12">
+              <input placeholder="cerca località" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button [disabled]="!placeSelected" (click)="cercaDaCategoria()" class="btn btn-outline-secondary bottoneRicerca" type="button">Avvia Ricerca</button>
+                </div>
+                <input [(ngModel)]="placeSelected" class="form-control" id="something" list="listOfPlace" placeholder="avvia ricerca da categoria">
+                <datalist id="listOfPlace">
+                  <option [ngValue]="place" *ngFor="let place of listOfPlace">{{place.value}}</option>
+                </datalist>
+              </div>
+            </div>
+          </div>
+          <div class="map">
+            <agm-map
+              [latitude]="latMap"
+              [longitude]="lngMap"
+              [zoom]="zoom"
+              (mapReady)="mapReady($event)"
+              (mapClick)="mapClicked($event)">
+              <agm-marker [latitude]="latPosition" [longitude]="lngPosition" [iconUrl]="'assets/img/avatar2.png'">
+                <agm-info-window>
+                  <strong>Posizione Corrente</strong>
+                </agm-info-window>
+              </agm-marker>
+              <agm-marker *ngIf="latPointToSave && lngPointToSave"
+              [latitude]="latPointToSave"
+              [longitude]="lngPointToSave"
+              [markerDraggable]="true"
+              (dragEnd)="markerDragEnd($event)"
+              (markerClick)="clickedMarker()">
+                <agm-info-window>
+                  <strong>Punto di interesse da salvare</strong>
+                </agm-info-window>
+              </agm-marker>
+              <!-- <agm-marker-cluster imagePath="./assets/img/m">
+                <agm-marker
+                  *ngFor="let m of markers;let i = index;"
+                  [latitude]="m.lat"
+                  [longitude]="m.lng"
+                  [label]="m.label">
+                  <agm-info-window>
+                      <strong>{{m.name}}</strong>
+                    </agm-info-window>
+                </agm-marker>
+              </agm-marker-cluster> -->
+            </agm-map>
+          </div>
+          <!-- <div class="list-group my-2">
+            <div *ngFor="let point of pointOfInteresList" class="list-group-item list-group-item-action flex-column align-items-start mb-2" (click)="goToPosition(point)">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{point.nome}}</h5>
+                <small>{{point.distanza | distancePipe}}</small>
+              </div>
+              <p class="mb-1">{{point.via}} , {{point.stato | openClosedFilter}}</p>
+              <small>{{point.rating}}</small>
+              <ngb-rating [(rate)]="point.rating" [readonly]="true" max="5"></ngb-rating>
+            </div>
+          </div> -->
+        </div>
+    </div>
+
+  </ng-sidebar-container>

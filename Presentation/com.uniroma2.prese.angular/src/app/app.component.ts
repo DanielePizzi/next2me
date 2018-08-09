@@ -11,7 +11,7 @@ import { LoggedService } from './core/services/loggedService';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   showLoader: LoaderState;
   token: string;
@@ -22,25 +22,25 @@ export class AppComponent implements OnInit{
       private loggedService: LoggedService,
     ) {
       loggedService.isLogged().subscribe(data => {
-        if(data) {
+        if (data) {
           this.sessionService.changeToken(data);
         }
-      })
+      });
   }
 
   ngOnInit(): void {
 
     this.loaderService.loaderState.subscribe((val: LoaderState) => {
       this.showLoader = val;
-        this.sessionService.currentSessionToken.subscribe(token => this.token = token)
+        this.sessionService.currentSessionToken.subscribe(token => this.token = token);
     });
   }
 
   logout() {
     this.loggedService.logout().subscribe(data => {
-      if(data) {
+      if (data) {
         this.sessionService.deleteToken();
       }
-    })
+    });
   }
 }

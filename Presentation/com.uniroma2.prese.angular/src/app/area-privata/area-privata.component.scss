@@ -22,3 +22,6 @@ agm-map {
   background-color: cornflowerblue;
 }
 
+form button:disabled:hover{
+  cursor: not-allowed;
+}

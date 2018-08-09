@@ -43,8 +43,10 @@ export class NgbdModalContent {
 })
 export class HomePageComponent implements OnInit {
 
-  lat: number;
-  lng: number;
+  latMap: number;
+  lngMap: number;
+  latPosition: number;
+  lngPosition: number;
   zoom: number;
   toogle: boolean = false;
   listOfPlace: any = placeEnum.listOFplace;
@@ -73,10 +75,6 @@ export class HomePageComponent implements OnInit {
     this.caricaAutocompletamentoMappa();
   }
 
-  toogleChange(){
-    this.toogle = !this.toogle;
-  }
-
   mapReady($event: any) {
     this.caricaMappa($event);
   }
@@ -84,6 +82,7 @@ export class HomePageComponent implements OnInit {
   private caricaAutocompletamentoMappa(){
     this.searchControl = new FormControl();
     //load Places Autocomplete
+
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
@@ -99,8 +98,10 @@ export class HomePageComponent implements OnInit {
           }
 
           //set latitude, longitude and zoom
-          this.lat = place.geometry.location.lat();
-          this.lng = place.geometry.location.lng();
+          this.latMap = place.geometry.location.lat();
+          this.lngMap = place.geometry.location.lng();
+          this.latPosition = place.geometry.location.lat();
+          this.lngPosition = place.geometry.location.lng();
         });
       });
     });
@@ -119,7 +120,7 @@ export class HomePageComponent implements OnInit {
   }
 
   cercaDaQuery(){
-    let latLng = new google.maps.LatLng(this.lat, this.lng);
+    let latLng = new google.maps.LatLng(this.latPosition, this.lngPosition);
     let placeService = new google.maps.places.PlacesService(this.map);
     this.loaderService.show();
     placeService.findPlaceFromQuery({
@@ -138,7 +139,7 @@ export class HomePageComponent implements OnInit {
           keySelected = this.listOfPlace[key].key;
       }
     });
-    let latLng = new google.maps.LatLng(this.lat, this.lng);
+    let latLng = new google.maps.LatLng(this.latPosition, this.lngPosition);
     let placeService = new google.maps.places.PlacesService(this.map);
     this.loaderService.show();
     placeService.nearbySearch({
@@ -167,10 +168,13 @@ export class HomePageComponent implements OnInit {
           id: element.id,
           via: element.vicinity,
           nome: element.name,
-          distanza: Utils.calculateDistanceFromPoint(this.lat,this.lng,+element.geometry.location.lat(),+element.geometry.location.lng(),'K'),
+          distanza: Utils.calculateDistanceFromPoint(this.latPosition,this.lngPosition,+element.geometry.location.lat(),+element.geometry.location.lng(),'K'),
           stato: element.opening_hours ? element.opening_hours.open_now : false,
-          rating: element.rating}
-        })
+          rating: element.rating,
+          lat: +element.geometry.location.lat(),
+          lng: +element.geometry.location.lng()
+        }
+      })
       this.pointOfInteresList.sort(function(a,b){
         return Number(a.distanza) - Number(b.distanza);
       })
@@ -184,8 +188,17 @@ export class HomePageComponent implements OnInit {
   }
 
   private mostraPosizione(position) {
-    this.lat = position.coords.latitude;
-    this.lng = position.coords.longitude;
+    this.latMap = position.coords.latitude;
+    this.lngMap = position.coords.longitude;
+    this.latPosition = position.coords.latitude;
+    this.lngPosition = position.coords.longitude;
+  }
+
+  goToPosition(point) {
+    this.latMap = point.lat;
+    this.lngMap = point.lng;
+    this.zoom = 18;
+    window.scrollTo({ left: 0, top: 0, behavior: 'smooth' });
   }
 
 }

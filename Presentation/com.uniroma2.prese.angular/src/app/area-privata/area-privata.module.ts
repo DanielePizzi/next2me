@@ -6,7 +6,8 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {RatingModule} from "ngx-rating";
+import { RatingModule} from "ngx-rating";
+import { SidebarModule } from 'ng-sidebar';
 import { AreaPrivataComponent } from './area-privata.component';
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     SharedModule,
     NgbModule,
-    RatingModule
+    RatingModule,
+    SidebarModule
   ],
   declarations: [AreaPrivataComponent],
   exports:[
