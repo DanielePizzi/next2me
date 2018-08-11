@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RatingModule} from "ngx-rating";
 import { SidebarModule } from 'ng-sidebar';
 import { AreaPrivataComponent } from './area-privata.component';
+import { AreaPrivataService } from './area-privata.service';
 
 const routes: Routes = [
   {
@@ -35,5 +36,6 @@ const routes: Routes = [
     AreaPrivataComponent,
     RouterModule
   ],
+  providers: [AreaPrivataService],
 })
 export class AreaPrivataModule { }

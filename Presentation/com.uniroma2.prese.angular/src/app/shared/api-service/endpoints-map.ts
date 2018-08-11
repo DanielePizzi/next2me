@@ -11,4 +11,13 @@ export const ENDPOINTS_MAP = {
   'logout':{
     'dev':'/user/logout'
   },
+  'salvaPuntoInteresse':{
+    'dev':'/maps/salvaPuntoInteresse'
+  },
+  'getPuntoInteresse':{
+    'dev':'/maps/getPuntoInteresse'
+  },
+  'rimuoviPuntoInteresse':{
+    'dev':'/maps/rimuoviPuntoInteresse'
+  },
 }

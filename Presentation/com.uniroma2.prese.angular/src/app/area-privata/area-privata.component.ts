@@ -5,11 +5,12 @@ import { FormControl } from '@angular/forms';
 import { AgmMap, MapsAPILoader } from '@agm/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoaderService } from '../core/services/loader.service';
+import { AreaPrivataService } from './area-privata.service';
 
 @Component({
   selector: 'app-area-privata',
   templateUrl: './area-privata.component.html',
-  styleUrls: ['./area-privata.component.scss']
+  styleUrls: ['./area-privata.component.scss'],
 })
 export class AreaPrivataComponent implements OnInit {
 
@@ -17,8 +18,6 @@ export class AreaPrivataComponent implements OnInit {
   lngMap: number;
   latPosition: number;
   lngPosition: number;
-  latPointToSave: number;
-  lngPointToSave: number;
   zoom: number;
   toogle: boolean = false;
   listOfPlace: any = placeEnum.listOFplace;
@@ -28,6 +27,16 @@ export class AreaPrivataComponent implements OnInit {
   pointOfInteresList: PointOfInterest[] = [];
   private map: any;
   public searchControl: FormControl;
+
+
+  /*FORM SALVA PUNTO INTERESSE*/
+  latPointToSave: number;
+  lngPointToSave: number;
+  nome: string;
+  citta: string;
+  stato: string;
+  categoria: any;
+  descrizione: string;
 
   @ViewChild("search")
   public searchElementRef: ElementRef;
@@ -40,6 +49,7 @@ export class AreaPrivataComponent implements OnInit {
     private ngZone: NgZone,
     private modalService: NgbModal,
     private loaderService : LoaderService,
+    private areaPrivataService: AreaPrivataService
   ) { }
 
   ngOnInit() {
@@ -107,17 +117,85 @@ export class AreaPrivataComponent implements OnInit {
   mapClicked($event: any) {
     this.latPointToSave = $event.coords.lat;
     this.lngPointToSave = $event.coords.lng;
-    this._toggleSidebar();
+    // this._toggleSidebar();
   }
 
   markerDragEnd($event: any) {
     this.latPointToSave = $event.coords.lat;
     this.lngPointToSave = $event.coords.lng;
-    this._toggleSidebar();
+    // this._toggleSidebar();
   }
 
   clickedMarker() {
     this._toggleSidebar();
+  }
+
+  cercaDaCategoria(){
+    let keySelected;
+    Object.keys(this.listOfPlace).forEach(key => {
+      if (this.listOfPlace[key].value === this.placeSelected) {
+          keySelected = this.listOfPlace[key].key;
+      }
+    });
+    let puntoDiInteresse = {
+      username: '',
+      categoria: keySelected,
+      latitudine: this.latPosition,
+      longitudine: this.lngPosition
+    }
+    this.areaPrivataService.getPuntoInteresse(puntoDiInteresse).subscribe(data => {
+      this.callback(data)
+    })
+  }
+
+  callback(results) {
+    this.markers = [];
+    this.pointOfInteresList = []
+    const markerT = results.pointOfInterest.map( (element) => {
+      return  {
+        lat: +element.geometry.location.lat,
+        lng: +element.geometry.location.lng,
+        draggable: false,
+        name: element.nome }
+      })
+    this.pointOfInteresList = results.pointOfInterest.map((element) => {
+      return  {
+        id: element.id,
+        descrizione: element.descrizione,
+        nome: element.nome,
+        distanza: +element.geometry.location.distanza,
+        tipo: element.tipo,
+        stato: element.opening_hours ? element.opening_hours.open_now : false,
+        rating: element.rating,
+        lat: +element.geometry.location.lat,
+        lng: +element.geometry.location.lng
+      }
+    })
+    this.pointOfInteresList.sort(function(a,b){
+      return Number(a.distanza) - Number(b.distanza);
+    })
+    this.markers = markerT;
+    this.agmMap.triggerResize();
+  }
+
+  eliminaPuntoInteresse(point:any) {
+    let puntoDiInteresseDaEliminare = {
+      idPoint: point.id,
+    }
+    this.areaPrivataService.rimuoviPuntoInteresse(puntoDiInteresseDaEliminare).subscribe(data => {
+      let puntoDiInteresse = {
+        username: '',
+        categoria: point.tipo,
+        latitudine: this.latPosition,
+        longitudine: this.lngPosition
+      }
+      this.areaPrivataService.getPuntoInteresse(puntoDiInteresse).subscribe(data => {
+        this.callback(data)
+      }, err => {
+        this.markers = [];
+        this.pointOfInteresList = []
+      })
+    })
   }
 
   // ********************************************
@@ -138,6 +216,39 @@ export class AreaPrivataComponent implements OnInit {
     this.latPointToSave = null
     this.lngPointToSave = null
     this._toggleSidebar();
+  }
+
+  private clearForm(){
+    this.nome = "";
+    this.citta = "";
+    this.stato = "";
+    this.categoria = "";
+    this.descrizione = "";
+  }
+
+  private salvaPuntoInteresse() {
+    let puntoDiInteresse = {
+      username: '',
+      pointOfInterest : {
+        nome: this.nome,
+        citta: this.citta,
+        stato: this.stato,
+        tipo: this.categoria.key,
+        descrizione: this.descrizione,
+        geometry: {
+          location: {
+            lat: this.latPointToSave.toString(),
+            lng: this.lngPointToSave.toString(),
+          }
+        }
+      },
+    }
+    this.areaPrivataService.salvaPuntoInteresse(puntoDiInteresse).subscribe(data => {
+      this._toggleSidebar();
+      this.latPointToSave = null
+      this.lngPointToSave = null
+      this.clearForm();
+    })
   }
 
 }

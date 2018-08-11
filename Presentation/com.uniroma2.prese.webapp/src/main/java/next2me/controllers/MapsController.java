@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import next2me.abstracts.AbstractResponse;
 import next2me.abstracts.AbstractRestController;
+import next2me.bean.SessionBean;
 import next2me.command.ICommandFactory;
 import next2me.enums.ErrorEnum;
 import next2me.model.request.GetPointRequest;
 import next2me.model.request.RemovePointRequest;
 import next2me.model.request.SavePointRequest;
 import next2me.model.response.GetPointResponse;
-import next2me.model.response.RegisterResponse;
 import next2me.model.response.RemovePointResponse;
 import next2me.model.response.SavePointResponse;
 import next2me.utils.ErrorHandler;
@@ -36,15 +37,21 @@ public class MapsController extends AbstractRestController{
 	@Autowired
 	private ICommandFactory commandFactory;
 	
+	@Autowired
+	private SessionBean sessionBean;
+	
 	private static final String CLASS = "MapsController";
 	public static final Logger logger = LoggerFactory.getLogger(MapsController.class);
 
+	@CrossOrigin
 	@RequestMapping(value = "/salvaPuntoInteresse", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<AbstractResponse> salvaPuntoInteresse(@Valid @RequestBody SavePointRequest request, Errors errors){
 		
 		String methodName = "salvaPuntoInteresse";
 		
 		logger.info("Start controller [" + methodName + "]");
+		
+		request.setUsername(sessionBean.getUser().getName());
 		
 		SavePointResponse output = new SavePointResponse();
 		
@@ -60,12 +67,15 @@ public class MapsController extends AbstractRestController{
 		
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "/getPuntoInteresse", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<AbstractResponse> getPuntoInteresse(@Valid @RequestBody GetPointRequest request, Errors errors){
 		
 		String methodName = "getPuntoInteresse";
 		
 		logger.info("Start controller [" + methodName + "]");
+		
+		request.setUsername(sessionBean.getUser().getName());
 		
 		GetPointResponse output = new GetPointResponse();
 		
@@ -81,7 +91,7 @@ public class MapsController extends AbstractRestController{
 		
 	}
 	
-	
+	@CrossOrigin
 	@RequestMapping(value = "/rimuoviPuntoInteresse", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<AbstractResponse> rimuoviPuntoInteresse(@Valid @RequestBody RemovePointRequest request, Errors errors){
 		

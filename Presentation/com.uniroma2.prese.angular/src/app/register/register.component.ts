@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import { User } from '../model/model.user';
 import { RegisterService } from './register.service';
@@ -8,7 +8,6 @@ import { SessionService } from '../core/services/session.service';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit {
 

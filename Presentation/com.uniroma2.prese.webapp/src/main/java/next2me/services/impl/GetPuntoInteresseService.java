@@ -68,9 +68,6 @@ public class GetPuntoInteresseService extends AbstractService{
 		
 		PointDAO pointDAO = mysqlDAOfactory.getPointDAO();
 		UserDAO userDAO = mysqlDAOfactory.getUserDAO();
-		HashMap<String,Object> pointLocation = new HashMap<String, Object>();
-		HashMap<String,Object> geometry = new HashMap<String, Object>();
-		HashMap<String,Object> location = new HashMap<String, Object>();
 		ArrayList<Map> results = new ArrayList<Map>();
 		User user = userDAO.getUserName(req.getUsername());
 		
@@ -78,30 +75,33 @@ public class GetPuntoInteresseService extends AbstractService{
 			logger.debug(String.format("%s-%s:: user null",CLASS,method));
 			out = (GetPointResponse) ErrorHandler.addError(out, req, ErrorEnum.UTENTE_NON_ESISTENTE);
 		} else {
-			PointDistance pointDistance = pointDAO.getPointNear(user.getId(),req.getCategoria(), Double.parseDouble(req.getLatitudine()), Double.parseDouble(req.getLongitudine()));
+			ArrayList<PointDistance> pointDistance = pointDAO.getPointNear(user.getId(),req.getCategoria(), Double.parseDouble(req.getLatitudine()), Double.parseDouble(req.getLongitudine()));
 			
 			if(pointDistance == null){
 				logger.debug(String.format("%s - %s::point null",CLASS,method));
 				out = (GetPointResponse) ErrorHandler.addError(out, req, ErrorEnum.PUNTI_INTERESSE_NON_ESISTENTI);
 			} else {
-				Point point = pointDistance.getPoint();
-				
-				logger.debug(String.format("%s-%s:: punto da restituire[%s]",CLASS,method,point.toString()));
-				
-				location.put("lat", Double.parseDouble(point.getLat()));
-				location.put("lng", Double.parseDouble(point.getLng()));
-				location.put("distanza", pointDistance.getDistanza());
-				geometry.put("location", location);
-				pointLocation.put("nome",point.getNome());
-				pointLocation.put("citta",point.getCitta());
-				pointLocation.put("stato", point.getStato());
-				pointLocation.put("tipo", point.getTipo());
-				pointLocation.put("id", point.getId());
-				pointLocation.put("descrizione", point.getDescrizione());
-				pointLocation.put("geometry",geometry);
-				results.add(pointLocation);
+				for (PointDistance pointDistanceIterator : pointDistance) {
+					HashMap<String,Object> pointLocation = new HashMap<String, Object>();
+					HashMap<String,Object> geometry = new HashMap<String, Object>();
+					HashMap<String,Object> location = new HashMap<String, Object>();
+					Point point = pointDistanceIterator.getPoint();	
+					logger.debug(String.format("%s-%s:: punto da restituire[%s]",CLASS,method,point.toString()));
+					location.put("lat", Double.parseDouble(point.getLat()));
+					location.put("lng", Double.parseDouble(point.getLng()));
+					location.put("distanza", pointDistanceIterator.getDistanza());
+					geometry.put("location", location);
+					pointLocation.put("nome",point.getNome());
+					pointLocation.put("citta",point.getCitta());
+					pointLocation.put("stato", point.getStato());
+					pointLocation.put("tipo", point.getTipo());
+					pointLocation.put("id", point.getId());
+					pointLocation.put("descrizione", point.getDescrizione());
+					pointLocation.put("geometry",geometry);
+					results.add(pointLocation);
+				}	
 				out.setPointOfInterest(results);
-				logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,point.toString()));
+//				logger.debug(String.format("%s - %s::punto piu' vicino[%s]",CLASS,method,point.toString()));
 				logger.debug(String.format("%s - %s::*****************************",CLASS,method));
 				logger.debug(String.format("%s - %s::           END",CLASS,method));
 				logger.debug(String.format("%s - %s::*****************************",CLASS,method));
