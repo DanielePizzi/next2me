@@ -202,23 +202,23 @@ export class AreaPrivataComponent implements OnInit {
   // * SIDEBAR ELEMENT FUCTION ******************
   // ********************************************
 
-  private _opened: boolean = false;
-  private _showBackdrop: boolean = true;
-  private _closeOnClickOutside: boolean = true;
-  private _closeOnClickBackdrop: boolean = true;
-  private _mode: string = 'push';
+  _opened: boolean = false;
+  _showBackdrop: boolean = true;
+  _closeOnClickOutside: boolean = true;
+  _closeOnClickBackdrop: boolean = true;
+  _mode: string = 'push';
 
-  private _toggleSidebar() {
+  _toggleSidebar() {
     this._opened = !this._opened;
   }
 
-  private cancellaPuntoInteresseDaSalvare() {
+  cancellaPuntoInteresseDaSalvare() {
     this.latPointToSave = null
     this.lngPointToSave = null
     this._toggleSidebar();
   }
 
-  private clearForm(){
+  clearForm(){
     this.nome = "";
     this.citta = "";
     this.stato = "";
@@ -226,7 +226,7 @@ export class AreaPrivataComponent implements OnInit {
     this.descrizione = "";
   }
 
-  private salvaPuntoInteresse() {
+  salvaPuntoInteresse() {
     let puntoDiInteresse = {
       username: '',
       pointOfInterest : {
